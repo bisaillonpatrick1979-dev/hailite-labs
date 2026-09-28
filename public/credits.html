@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#071426" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Crédits d'IA — Hailite Manager</title>
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+  <script>
+    // Langue : paramètre ?langue= (envoyé par l'app), sinon préférence du site.
+    try {
+      var l = new URLSearchParams(location.search).get("langue");
+      if (l === "en" || (!l && localStorage.getItem("hailite-lang") === "en")) document.documentElement.classList.add("en");
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Hailite Labs — accueil">
+      <img src="/assets/logo.svg" alt="" class="brand-mark" width="40" height="40">
+      <span class="brand-word">HAILITE <strong>LABS</strong></span>
+    </a>
+  </header>
+
+  <main class="page-simple" id="top">
+    <p class="kicker">HAILITE MANAGER</p>
+    <h1><span data-fr>Recharger les crédits d'IA</span><span data-en>Top up AI credits</span></h1>
+    <p data-fr>Les crédits paient les réponses de l'assistant IA de votre entreprise. Une réponse coûte souvent quelques cents.</p>
+    <p data-en>Credits pay for your company's AI assistant replies. A reply often costs a few cents.</p>
+
+    <form id="formCredits" class="pm-cred" novalidate>
+      <div>
+        <label class="pm-cred-label" for="entreprise"><span data-fr>Code d'entreprise</span><span data-en>Company code</span></label>
+        <input id="entreprise" name="entreprise" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="40"
+          style="flex:1;min-width:0;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:#06101d;color:#fff;font-size:16px">
+      </div>
+      <fieldset style="border:0;padding:0;margin:0">
+        <legend class="pm-cred-label" style="margin-bottom:10px"><span data-fr>Montant</span><span data-en>Amount</span></legend>
+        <div class="pm-montants">
+          <label><input type="radio" name="montant" value="10"> <b>10 $</b></label>
+          <label><input type="radio" name="montant" value="25" checked> <b>25 $</b></label>
+          <label><input type="radio" name="montant" value="50"> <b>50 $</b></label>
+        </div>
+      </fieldset>
+      <button class="btn btn-primary" type="submit"><span data-fr>Payer avec Stripe</span><span data-en>Pay with Stripe</span></button>
+      <p class="form-status" id="creditsStatut" role="status" aria-live="polite"></p>
+    </form>
+    <p class="maj" data-fr>Prix en dollars canadiens. Les crédits n'expirent pas et ne sont pas remboursables. <a href="/conditions">Conditions</a></p>
+    <p class="maj" data-en>Prices in Canadian dollars. Credits do not expire and are non-refundable. <a href="/conditions">Terms</a></p>
+  </main>
+
+  <script>
+    (() => {
+      const en = document.documentElement.classList.contains("en");
+      const t = (fr, e) => (en ? e : fr);
+      const params = new URLSearchParams(location.search);
+      const form = document.getElementById("formCredits");
+      const statut = document.getElementById("creditsStatut");
+      form.entreprise.value = params.get("entreprise") || "";
+      const montant = params.get("montant");
+      if (["10", "25", "50"].includes(montant)) form.querySelector(`input[value="${montant}"]`).checked = true;
+
+      const ERREURS = {
+        code_invalide: t("Vérifiez le code d'entreprise (lettres minuscules, chiffres et tirets).", "Check the company code (lowercase letters, numbers and dashes)."),
+        entreprise_inconnue: t("Ce code d'entreprise n'existe pas. Copiez-le depuis Réglages → IA dans l'application.", "This company code does not exist. Copy it from Settings → AI in the app."),
+        credits_inactifs: t("Les recharges ouvrent bientôt.", "Top-ups open soon."),
+      };
+
+      form.addEventListener("submit", async event => {
+        event.preventDefault();
+        const bouton = form.querySelector("button");
+        bouton.disabled = true;
+        statut.dataset.type = "";
+        statut.textContent = t("Redirection vers le paiement sécurisé…", "Redirecting to secure checkout…");
+        try {
+          const reponse = await fetch("/api/credits", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({
+              entreprise: form.entreprise.value.trim().toLowerCase(),
+              montant: Number(form.querySelector('input[name="montant"]:checked').value),
+              langue: en ? "en" : "fr",
+            }),
+          });
+          const donnees = await reponse.json().catch(() => ({}));
+          if (reponse.ok && donnees.url) { location.href = donnees.url; return; }
+          statut.dataset.type = "erreur";
+          statut.textContent = ERREURS[donnees.erreur] || t("Le paiement n'a pas pu démarrer. Réessayez ou écrivez à contact@hailitelabs.com.", "Checkout could not start. Try again or write to contact@hailitelabs.com.");
+        } catch {
+          statut.dataset.type = "erreur";
+          statut.textContent = t("Connexion impossible. Réessayez.", "Connection failed. Try again.");
+        }
+        bouton.disabled = false;
+      });
+    })();
+  </script>
+</body>
+</html>

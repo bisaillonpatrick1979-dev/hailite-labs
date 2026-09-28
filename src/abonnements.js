@@ -97,6 +97,60 @@ async function manager(env, chemin, corps) {
   return { statut: reponse.status, donnees };
 }
 
+/** Recharges de crédits d'IA : n'exigent que Stripe et le lien avec Hailite Manager. */
+export function creditsActifs(env) {
+  return Boolean(env.STRIPE_SECRET_KEY && env.BILLING_API_SECRET && env.MANAGER_API_URL);
+}
+
+const MONTANTS_CREDITS = [10, 25, 50];
+const CODE_ENTREPRISE = /^[a-z0-9](?:[a-z0-9-]{2,38})[a-z0-9]$/;
+
+// ---------- Recharge de crédits d'IA (paiement unique) ----------
+export async function creerSessionCredits(request, env) {
+  if (!creditsActifs(env)) return json({ ok: false, erreur: "credits_inactifs" }, 503);
+  let corps = {};
+  try { corps = await request.json(); } catch { /* corps vide */ }
+  const entreprise = String(corps.entreprise || "").trim().toLowerCase();
+  const montant = Number(corps.montant);
+  const langue = corps.langue === "en" ? "en" : "fr";
+  if (!CODE_ENTREPRISE.test(entreprise)) return json({ ok: false, erreur: "code_invalide" }, 400);
+  if (!MONTANTS_CREDITS.includes(montant)) return json({ ok: false, erreur: "montant_invalide" }, 400);
+
+  // L'entreprise doit exister AVANT d'encaisser quoi que ce soit.
+  const verification = await manager(env, "/api/billing/credits", { accessCode: entreprise, checkOnly: true });
+  if (verification.statut === 404) return json({ ok: false, erreur: "entreprise_inconnue" }, 404);
+  if (verification.statut !== 200) return json({ ok: false, erreur: "verification" }, 502);
+
+  const origine = new URL(request.url).origin;
+  try {
+    const session = await stripe(env, "POST", "checkout/sessions", {
+      mode: "payment",
+      locale: langue === "en" ? "en" : "fr-CA",
+      line_items: {
+        0: {
+          quantity: 1,
+          price_data: {
+            currency: "cad",
+            unit_amount: montant * 100,
+            product_data: {
+              name: langue === "en" ? `Hailite Manager AI credits — $${montant}` : `Crédits d'IA Hailite Manager — ${montant} $`,
+              description: langue === "en" ? `Company: ${entreprise}` : `Entreprise : ${entreprise}`,
+            },
+          },
+        },
+      },
+      metadata: { type: "credits_ia", entreprise, montant: String(montant) },
+      payment_intent_data: { metadata: { type: "credits_ia", entreprise } },
+      success_url: `${origine}/credits-merci?montant=${montant}`,
+      cancel_url: `${origine}/credits?entreprise=${encodeURIComponent(entreprise)}&montant=${montant}`,
+    });
+    return json({ ok: true, url: session.url });
+  } catch (err) {
+    console.error("Checkout crédits :", err.message);
+    return json({ ok: false, erreur: "stripe" }, 502);
+  }
+}
+
 // ---------- 1. Création de la session de paiement ----------
 export async function creerSessionPaiement(request, env) {
   if (!abonnementsActifs(env)) return json({ ok: false, erreur: "abonnements_inactifs" }, 503);
@@ -256,7 +310,7 @@ export async function signatureStripeValide(corps, entete, secret, maintenant = 
 }
 
 export async function webhookStripe(request, env) {
-  if (!env.STRIPE_WEBHOOK_SECRET || !abonnementsActifs(env)) return json({ ok: false }, 503);
+  if (!env.STRIPE_WEBHOOK_SECRET || !creditsActifs(env)) return json({ ok: false }, 503);
   const corps = await request.text();
   if (!(await signatureStripeValide(corps, request.headers.get("stripe-signature"), env.STRIPE_WEBHOOK_SECRET))) {
     return json({ ok: false, erreur: "signature" }, 400);
@@ -265,6 +319,26 @@ export async function webhookStripe(request, env) {
   const objet = evenement.data?.object || {};
 
   try {
+    // Recharge de crédits d'IA (paiement unique)
+    if (evenement.type === "checkout.session.completed" && objet.mode === "payment" && objet.metadata?.type === "credits_ia") {
+      if (objet.payment_status !== "paid") return json({ ok: true }); // paiement différé : rien à créditer encore
+      const { statut } = await manager(env, "/api/billing/credits", {
+        accessCode: objet.metadata.entreprise,
+        amountCents: Number(objet.amount_subtotal),
+        stripeRef: objet.id,
+      });
+      if (statut !== 200 && statut !== 201) return json({ ok: false }, 500); // Stripe réessaiera
+      return json({ ok: true });
+    }
+    if (evenement.type === "checkout.session.async_payment_succeeded" && objet.metadata?.type === "credits_ia") {
+      const { statut } = await manager(env, "/api/billing/credits", {
+        accessCode: objet.metadata.entreprise,
+        amountCents: Number(objet.amount_subtotal),
+        stripeRef: objet.id,
+      });
+      if (statut !== 200 && statut !== 201) return json({ ok: false }, 500);
+      return json({ ok: true });
+    }
     if (evenement.type === "checkout.session.completed" && objet.mode === "subscription") {
       // Filet de sécurité : l'entreprise est créée même si le client ferme la page.
       const resultat = await provisionner(env, objet.id);
