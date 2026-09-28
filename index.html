@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#071426" />
+  <meta name="description" content="Hailite Labs — applications, outils numériques, impressions 3D, vêtements, jeux et idées utiles conçus pour la vraie vie." />
+  <title>Hailite Labs — Des idées utiles, conçues pour la vraie vie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="announcement">
+    <span data-fr>Conçu au Canada • Produits numériques et physiques • Prix en CAD</span>
+    <span data-en>Designed in Canada • Digital & physical products • Prices in CAD</span>
+  </div>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Hailite Labs">
+      <img src="./assets/logo.svg" alt="" class="brand-mark">
+      <span class="brand-word">HAILITE <strong>LABS</strong></span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Navigation principale">
+      <a href="#shop" data-fr>Boutique</a><a href="#shop" data-en>Shop</a>
+      <a href="#apps" data-fr>Applications</a><a href="#apps" data-en>Apps</a>
+      <a href="#shop" data-filter-link="3d" data-fr>Impression 3D</a><a href="#shop" data-filter-link="3d" data-en>3D Prints</a>
+      <a href="#shop" data-filter-link="apparel" data-fr>Vêtements</a><a href="#shop" data-filter-link="apparel" data-en>Apparel</a>
+      <a href="#shop" data-filter-link="games" data-fr>Jeux & Pranks</a><a href="#shop" data-filter-link="games" data-en>Games & Pranks</a>
+      <a href="#about" data-fr>À propos</a><a href="#about" data-en>About</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="lang-toggle" id="langToggle" aria-label="Changer la langue">FR <span>/</span> EN</button>
+      <button class="icon-btn" id="searchFocus" aria-label="Rechercher">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.35-4.35M19 11a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"/></svg>
+      </button>
+      <button class="cart-btn" id="cartOpen" aria-label="Ouvrir le panier">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L20 8H7M10 20h.01M17 20h.01"/></svg>
+        <span id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-glow hero-glow-a"></div>
+      <div class="hero-glow hero-glow-b"></div>
+      <div class="hero-copy">
+        <div class="eyebrow" data-fr>CRÉER • BÂTIR • JOUER • SIMPLIFIER</div>
+        <div class="eyebrow" data-en>CREATE • BUILD • PLAY • SIMPLIFY</div>
+        <h1 data-fr>Des idées utiles.<br><span>Une touche de futur.</span></h1>
+        <h1 data-en>Useful ideas.<br><span>A touch of future.</span></h1>
+        <p data-fr>Applications, accessoires imprimés en 3D, vêtements, outils et petits objets qui rendent le quotidien plus simple — ou juste plus le fun.</p>
+        <p data-en>Apps, 3D-printed accessories, apparel, tools and clever products that make everyday life simpler — or simply more fun.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#shop" data-fr>Explorer la boutique</a>
+          <a class="btn btn-primary" href="#shop" data-en>Explore the shop</a>
+          <a class="btn btn-ghost" href="#apps" data-fr>Voir les applications</a>
+          <a class="btn btn-ghost" href="#apps" data-en>See the apps</a>
+        </div>
+        <div class="trust-row">
+          <span>◆ <b data-fr>Créé d'ici</b><b data-en>Made here</b></span>
+          <span>◆ <b data-fr>Paiement sécurisé bientôt</b><b data-en>Secure checkout coming</b></span>
+          <span>◆ <b data-fr>Livraison Canada</b><b data-en>Canada shipping</b></span>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-label="Aperçu des univers Hailite Labs">
+        <div class="device">
+          <div class="device-notch"></div>
+          <div class="device-screen">
+            <img src="./assets/logo.svg" alt="" class="phone-logo">
+            <div class="phone-title">Hailite Hub</div>
+            <div class="phone-grid">
+              <span>APP</span><span>3D</span><span>TOOLS</span><span>PLAY</span>
+            </div>
+          </div>
+        </div>
+        <div class="product-sculpture hook"></div>
+        <div class="product-sculpture stand"></div>
+        <div class="micro-card micro-a"><small data-fr>NOUVEAU</small><small data-en>NEW</small><b>Hailite Manager</b></div>
+        <div class="micro-card micro-b"><small>3D PRINT</small><b>FlexHook V2</b></div>
+      </div>
+    </section>
+
+    <section class="category-strip" aria-label="Catégories">
+      <button data-category="apps"><span class="cat-icon">▣</span><b data-fr>Applications</b><b data-en>Apps</b><small data-fr>Chantier, utilitaires, productivité</small><small data-en>Worksite, utilities, productivity</small></button>
+      <button data-category="3d"><span class="cat-icon">⬡</span><b data-fr>Impression 3D</b><b data-en>3D Prints</b><small data-fr>Crochets, supports, pièces</small><small data-en>Hooks, mounts, parts</small></button>
+      <button data-category="tools"><span class="cat-icon">⌁</span><b data-fr>Outils</b><b data-en>Tools</b><small data-fr>Numériques et pratiques</small><small data-en>Digital & practical</small></button>
+      <button data-category="games"><span class="cat-icon">◈</span><b data-fr>Jeux & Pranks</b><b data-en>Games & Pranks</b><small data-fr>Pour le fun</small><small data-en>Made for fun</small></button>
+      <button data-category="apparel"><span class="cat-icon">◇</span><b data-fr>Vêtements</b><b data-en>Apparel</b><small data-fr>Québec & English</small><small data-en>Québec & English</small></button>
+    </section>
+
+    <section class="section shop-section" id="shop">
+      <div class="section-heading">
+        <div>
+          <p class="kicker" data-fr>LA BOUTIQUE</p><p class="kicker" data-en>THE SHOP</p>
+          <h2 data-fr>Des produits pour la vraie vie.</h2>
+          <h2 data-en>Products for real life.</h2>
+        </div>
+        <div class="shop-tools">
+          <label class="search-box">
+            <svg viewBox="0 0 24 24"><path d="m21 21-4.35-4.35M19 11a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"/></svg>
+            <input id="searchInput" type="search" placeholder="Rechercher..." autocomplete="off">
+          </label>
+        </div>
+      </div>
+
+      <div class="filter-row" id="filters">
+        <button class="active" data-filter="all" data-fr>Tout</button><button class="active" data-filter="all" data-en>All</button>
+        <button data-filter="apps" data-fr>Applications</button><button data-filter="apps" data-en>Apps</button>
+        <button data-filter="3d">3D</button>
+        <button data-filter="tools" data-fr>Outils</button><button data-filter="tools" data-en>Tools</button>
+        <button data-filter="games" data-fr>Jeux & Pranks</button><button data-filter="games" data-en>Games & Pranks</button>
+        <button data-filter="apparel" data-fr>Vêtements</button><button data-filter="apparel" data-en>Apparel</button>
+      </div>
+
+      <div class="product-grid" id="productGrid"></div>
+    </section>
+
+    <section class="feature-app section" id="apps">
+      <div class="feature-app-copy">
+        <p class="kicker" data-fr>APPLICATION VEDETTE</p><p class="kicker" data-en>FEATURED APP</p>
+        <h2>Hailite Manager</h2>
+        <p data-fr>Une application pensée pour les entrepreneurs et les équipes de chantier : temps, projets, factures, clients et suivi du travail au même endroit.</p>
+        <p data-en>An app built for contractors and field teams: time, projects, invoices, clients and work tracking in one place.</p>
+        <div class="feature-points">
+          <span>✓ <b data-fr>Punch & temps</b><b data-en>Time tracking</b></span>
+          <span>✓ <b data-fr>Factures</b><b data-en>Invoices</b></span>
+          <span>✓ <b data-fr>Projets</b><b data-en>Projects</b></span>
+          <span>✓ <b data-fr>Mobile</b><b data-en>Mobile</b></span>
+        </div>
+        <button class="btn btn-primary" data-product-open="hailite-manager" data-fr>Découvrir l'application</button>
+        <button class="btn btn-primary" data-product-open="hailite-manager" data-en>Discover the app</button>
+      </div>
+      <div class="feature-phone-wrap">
+        <div class="feature-orbit"></div>
+        <div class="device feature-device">
+          <div class="device-notch"></div>
+          <div class="device-screen manager-ui">
+            <div class="manager-logo"><img src="./assets/logo.svg" alt=""><span>Hailite Manager</span></div>
+            <div class="manager-summary"><small data-fr>AUJOURD'HUI</small><small data-en>TODAY</small><strong>7 h 42</strong></div>
+            <div class="manager-modules"><span>TIME</span><span>JOBS</span><span>INVOICE</span><span>CLIENTS</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="manifesto section" id="about">
+      <div>
+        <p class="kicker">HAILITE LABS</p>
+        <h2 data-fr>Pas une seule catégorie.<br>Une seule façon de penser.</h2>
+        <h2 data-en>Not one category.<br>One way of thinking.</h2>
+      </div>
+      <p data-fr>Hailite Labs rassemble des idées pratiques, numériques ou physiques. Un jour une application de chantier, le lendemain un accessoire imprimé en 3D, un jeu ou un chandail. Le lien entre tout ça : créer quelque chose d'utile, simple et différent.</p>
+      <p data-en>Hailite Labs brings together practical ideas, digital or physical. One day a worksite app, the next a 3D-printed accessory, a game or a shirt. The common thread: build something useful, simple and different.</p>
+    </section>
+
+    <section class="newsletter">
+      <div>
+        <p class="kicker" data-fr>RESTEZ DANS LA BOUCLE</p><p class="kicker" data-en>STAY IN THE LOOP</p>
+        <h2 data-fr>Nouveautés, lancements et prototypes.</h2>
+        <h2 data-en>New drops, launches and prototypes.</h2>
+      </div>
+      <form id="newsletterForm">
+        <input type="email" required placeholder="Votre courriel / Your email">
+        <button class="btn btn-primary" type="submit" data-fr>S'inscrire</button>
+        <button class="btn btn-primary" type="submit" data-en>Subscribe</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-brand">
+      <a class="brand" href="#top"><img src="./assets/logo.svg" alt="" class="brand-mark"><span class="brand-word">HAILITE <strong>LABS</strong></span></a>
+      <p data-fr>Des idées utiles. Une touche de futur.</p>
+      <p data-en>Useful ideas. A touch of future.</p>
+    </div>
+    <div>
+      <b data-fr>Boutique</b><b data-en>Shop</b>
+      <a href="#shop">Apps</a><a href="#shop">3D Prints</a><a href="#shop">Tools</a><a href="#shop">Games</a><a href="#shop">Apparel</a>
+    </div>
+    <div>
+      <b data-fr>Entreprise</b><b data-en>Company</b>
+      <a href="#about" data-fr>À propos</a><a href="#about" data-en>About</a>
+      <a href="mailto:hello@hailitelabs.ca">Contact</a>
+      <span data-fr>Calgary, Alberta</span><span data-en>Calgary, Alberta</span>
+    </div>
+    <div>
+      <b>FR / EN</b>
+      <span>CAD $</span>
+      <span>© 2026 Hailite Labs</span>
+    </div>
+  </footer>
+
+  <aside class="cart-drawer" id="cartDrawer" aria-hidden="true">
+    <div class="cart-head">
+      <h3 data-fr>Votre panier</h3><h3 data-en>Your cart</h3>
+      <button class="icon-btn" id="cartClose" aria-label="Fermer">×</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-foot">
+      <div class="cart-total"><span data-fr>Total</span><span data-en>Total</span><strong id="cartTotal">0,00 $ CAD</strong></div>
+      <button class="btn btn-primary full" id="checkoutBtn" data-fr>Passer à la caisse</button>
+      <button class="btn btn-primary full" id="checkoutBtnEn" data-en>Checkout</button>
+      <small data-fr>Le paiement sera branché dans une prochaine étape.</small>
+      <small data-en>Payments will be connected in a later step.</small>
+    </div>
+  </aside>
+  <div class="overlay" id="overlay"></div>
+
+  <dialog class="product-modal" id="productModal">
+    <button class="modal-close" id="modalClose" aria-label="Fermer">×</button>
+    <div id="modalContent"></div>
+  </dialog>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
