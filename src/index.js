@@ -2,6 +2,8 @@
 // - Sert le site statique (dossier public/) via le binding ASSETS
 // - Gère l'API d'inscription à l'infolettre : POST /api/inscription → base D1
 
+import { bienvenue, creerSessionPaiement, webhookStripe } from "./abonnements.js";
+
 // Validation simple d'une adresse courriel
 const COURRIEL_VALIDE = /^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,24}$/;
 
@@ -89,6 +91,21 @@ export default {
         return json({ ok: false, erreur: "origine_refusee" }, 403);
       }
       return inscrire(request, env);
+    }
+
+    // Abonnements Hailite Manager (voir src/abonnements.js)
+    if (url.pathname === "/api/abonnement" && request.method === "POST") {
+      const origine = request.headers.get("origin");
+      if (origine && new URL(origine).host !== url.host) {
+        return json({ ok: false, erreur: "origine_refusee" }, 403);
+      }
+      return creerSessionPaiement(request, env);
+    }
+    if (url.pathname === "/api/bienvenue" && request.method === "GET") {
+      return bienvenue(request, env);
+    }
+    if (url.pathname === "/api/stripe/webhook" && request.method === "POST") {
+      return webhookStripe(request, env);
     }
 
     if (url.pathname.startsWith("/api/")) {

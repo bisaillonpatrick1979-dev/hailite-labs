@@ -25,6 +25,19 @@
     }
   ],
 
+  // Abonnements Hailite Manager (voir src/abonnements.js).
+  // Les SECRETS (STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, BILLING_API_SECRET)
+  // se mettent dans Cloudflare, jamais ici. Tant que les prix sont vides, les
+  // boutons affichent « Les abonnements ouvrent bientôt ».
+  "vars": {
+    "MANAGER_API_URL": "",
+    "MANAGER_APP_URL": "",
+    "STRIPE_PRICE_SOLO": "",
+    "STRIPE_PRICE_EQUIPE": "",
+    "STRIPE_PRICE_ENTREPRISE": "",
+    "STRIPE_PORTAL_URL": ""
+  },
+
   // Journaux visibles dans l'onglet « Observabilité » de Cloudflare
   "observability": { "enabled": true }
 }

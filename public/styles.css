@@ -283,3 +283,44 @@ ul.feature-points{list-style:none;padding:0}
 .page-simple a{color:#8ec7ff;text-decoration:underline}
 .page-simple .btn{text-decoration:none;margin-top:18px}
 .page-simple .maj{color:#6f8399;font-size:13px}
+
+/* ===== Page Hailite Manager : forfaits, FAQ, bienvenue ===== */
+.pm-hero{padding-top:90px;padding-bottom:40px}
+.pm-hero h1{font-family:"Space Grotesk",sans-serif;font-size:clamp(38px,5.4vw,72px);line-height:1;letter-spacing:-.04em;margin:16px 0 22px;max-width:980px}
+.pm-hero h1 span{background:linear-gradient(110deg,#fff 0%,#8ec7ff 45%,#4b8fff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.pm-lead{max-width:720px;font-size:17px;line-height:1.75;color:#b7c7d8}
+#fonctions h2,#forfaits h2,#faq h2{font-family:"Space Grotesk";font-size:clamp(28px,3.6vw,46px);line-height:1.08;letter-spacing:-.03em;margin:9px 0 26px;max-width:820px}
+.pm-features{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.pm-features li{border:1px solid var(--line);border-radius:18px;padding:22px;background:linear-gradient(160deg,rgba(14,35,58,.92),rgba(7,18,31,.92));display:grid;gap:8px}
+.pm-features b{font-family:"Space Grotesk";font-size:17px}
+.pm-features span{color:#9db0c7;font-size:14px;line-height:1.6}
+.pm-note{color:#8da2b8;font-size:13px;line-height:1.7;margin:0 0 22px}
+.pm-note a{color:#8ec7ff;text-decoration:underline}
+.pm-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
+.pm-plan{position:relative;border:1px solid var(--line);border-radius:22px;padding:28px;background:linear-gradient(160deg,#0d1f33,#081522);display:flex;flex-direction:column}
+.pm-plan.is-featured{border-color:rgba(98,199,255,.55);background:linear-gradient(160deg,#12375e,#0a1b2e);box-shadow:0 24px 60px rgba(47,124,247,.18)}
+.pm-plan h3{font-family:"Space Grotesk";font-size:24px;margin:0 0 10px}
+.pm-badge{position:absolute;top:-12px;left:28px;margin:0;padding:6px 10px;border-radius:999px;background:#72d3ff;color:#06101d;font-size:10px;font-weight:800;letter-spacing:.12em}
+.pm-price{margin:0;display:flex;align-items:baseline;gap:6px;color:#9db0c7}
+.pm-price strong{font-family:"Space Grotesk";font-size:48px;color:#fff;letter-spacing:-.03em}
+.pm-users{margin:8px 0 18px;color:#8ed3ff;font-weight:800;font-size:14px}
+.pm-plan ul{list-style:none;padding:0;margin:0 0 26px;display:grid;gap:10px;color:#b7c9dc;font-size:14px}
+.pm-plan li:before{content:"✓ ";color:#72d3ff;font-weight:800}
+.pm-plan .btn{margin-top:auto;width:100%}
+.pm-plan .btn:disabled{opacity:.6;cursor:wait}
+.pm-status{margin:18px 0 10px}
+.pm-status a{color:#8ec7ff;text-decoration:underline}
+.pm-faq{display:grid;gap:10px;max-width:860px}
+.pm-faq details{border:1px solid var(--line);border-radius:16px;padding:18px 20px;background:rgba(255,255,255,.02)}
+.pm-faq summary{cursor:pointer;font-weight:800;font-size:16px}
+.pm-faq p{color:#a9bccf;line-height:1.75;margin:12px 0 0}
+.pm-faq a{color:#8ec7ff;text-decoration:underline}
+.pm-cred{display:grid;gap:12px;margin:26px 0;padding:22px;border:1px solid rgba(98,199,255,.4);border-radius:18px;background:#0b1d31}
+.pm-cred>div{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.pm-cred-label{min-width:170px;color:#9db0c7;font-size:14px}
+.pm-cred code{font-family:"Space Grotesk",ui-monospace,monospace;font-size:22px;font-weight:700;color:#fff;letter-spacing:.04em;word-break:break-all}
+.pm-cred .btn{padding:8px 14px;margin:0}
+.page-simple ol{color:#a9bccf;line-height:1.8;padding-left:22px}
+@media(max-width:1080px){.pm-features{grid-template-columns:1fr 1fr}}
+@media(max-width:820px){.pm-plans{grid-template-columns:1fr}.pm-features{grid-template-columns:1fr}.pm-cred-label{min-width:0;width:100%}}
+.page-simple a.btn-primary{color:#06101d}.page-simple a.btn-ghost{color:#e5effa}

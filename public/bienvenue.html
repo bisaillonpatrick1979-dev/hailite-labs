@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#071426" />
+  <meta name="robots" content="noindex, nofollow" />
+  <!-- La page contient un NIP : jamais de référent vers d'autres sites -->
+  <meta name="referrer" content="no-referrer" />
+  <title>Bienvenue — Hailite Manager</title>
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+  <script>
+    try { if (localStorage.getItem("hailite-lang") === "en") document.documentElement.classList.add("en"); } catch (e) {}
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Hailite Labs — accueil">
+      <img src="/assets/logo.svg" alt="" class="brand-mark" width="40" height="40">
+      <span class="brand-word">HAILITE <strong>LABS</strong></span>
+    </a>
+    <div class="header-actions" style="margin-left:auto">
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch to English">FR <span>/</span> EN</button>
+    </div>
+  </header>
+
+  <main class="page-simple" id="top">
+    <div id="bienvenue">
+      <!-- Chargement -->
+      <div data-etat="chargement">
+        <p class="kicker">HAILITE MANAGER</p>
+        <h1><span data-fr>Préparation de votre espace…</span><span data-en>Setting up your workspace…</span></h1>
+        <p data-fr>Ça prend quelques secondes. Ne fermez pas cette page.</p>
+        <p data-en>This takes a few seconds. Please keep this page open.</p>
+      </div>
+
+      <!-- Prêt -->
+      <div data-etat="pret" hidden>
+        <p class="kicker">HAILITE MANAGER</p>
+        <h1><span data-fr>Bienvenue! Votre essai de 14 jours commence.</span><span data-en>Welcome! Your 14-day trial starts now.</span></h1>
+        <p data-fr><strong>Notez ces informations maintenant.</strong> Pour votre sécurité, le NIP ne sera plus affiché après 24 heures.</p>
+        <p data-en><strong>Write this information down now.</strong> For your security, the PIN won't be shown again after 24 hours.</p>
+
+        <div class="pm-cred">
+          <div>
+            <span class="pm-cred-label" data-fr>Code d'entreprise</span><span class="pm-cred-label" data-en>Company code</span>
+            <code id="codeEntreprise"></code>
+            <button class="btn btn-ghost" type="button" data-copier="codeEntreprise"><span data-fr>Copier</span><span data-en>Copy</span></button>
+          </div>
+          <div>
+            <span class="pm-cred-label" data-fr>Administrateur</span><span class="pm-cred-label" data-en>Administrator</span>
+            <code id="nomAdmin"></code>
+          </div>
+          <div id="nipBloc">
+            <span class="pm-cred-label" data-fr>NIP administrateur</span><span class="pm-cred-label" data-en>Administrator PIN</span>
+            <code id="nipAdmin"></code>
+          </div>
+          <p id="nipAbsent" hidden>
+            <span data-fr>Le NIP a déjà été affiché ou a expiré. Si vous ne l'avez pas noté, écrivez à <a href="mailto:contact@hailitelabs.com">contact@hailitelabs.com</a> et on vous en donnera un nouveau.</span>
+            <span data-en>The PIN was already shown or has expired. If you didn't write it down, email <a href="mailto:contact@hailitelabs.com">contact@hailitelabs.com</a> and we'll issue a new one.</span>
+          </p>
+        </div>
+
+        <h2><span data-fr>Pour commencer</span><span data-en>Getting started</span></h2>
+        <ol>
+          <li data-fr>Ouvrez l'application avec le bouton ci-dessous (le code d'entreprise est rempli automatiquement).</li>
+          <li data-en>Open the app with the button below (the company code is filled in automatically).</li>
+          <li data-fr>Choisissez votre nom et entrez votre NIP.</li>
+          <li data-en>Pick your name and enter your PIN.</li>
+          <li data-fr>Complétez la fiche de votre entreprise, puis ajoutez vos employés. Chacun choisira son propre NIP.</li>
+          <li data-en>Complete your company profile, then add your employees. Each person will choose their own PIN.</li>
+          <li data-fr>Vos employés ouvrent la même adresse et entrent le code d'entreprise la première fois.</li>
+          <li data-en>Your employees open the same address and enter the company code the first time.</li>
+        </ol>
+        <a class="btn btn-primary" id="lienApp" href="#" hidden><span data-fr>Ouvrir Hailite Manager</span><span data-en>Open Hailite Manager</span></a>
+        <p>
+          <a id="lienPortail" href="#" hidden><span data-fr>Gérer mon abonnement (factures, carte, annulation)</span><span data-en>Manage my subscription (invoices, card, cancellation)</span></a>
+        </p>
+      </div>
+
+      <!-- Erreur -->
+      <div data-etat="erreur" hidden>
+        <p class="kicker">HAILITE MANAGER</p>
+        <h1><span data-fr>On n'a pas pu afficher votre espace.</span><span data-en>We couldn't display your workspace.</span></h1>
+        <p data-fr>Si votre paiement a été accepté, votre espace est créé quand même. Écrivez-nous à <a href="mailto:contact@hailitelabs.com">contact@hailitelabs.com</a> avec le courriel utilisé pour payer : on vous envoie votre code d'entreprise et votre NIP.</p>
+        <p data-en>If your payment went through, your workspace is still created. Email us at <a href="mailto:contact@hailitelabs.com">contact@hailitelabs.com</a> with the email you paid with: we'll send your company code and PIN.</p>
+        <a class="btn btn-primary" href="/hailite-manager"><span data-fr>← Retour aux forfaits</span><span data-en>← Back to pricing</span></a>
+      </div>
+    </div>
+  </main>
+
+  <script src="/app.js" defer></script>
+  <script src="/abonnement.js" defer></script>
+</body>
+</html>
