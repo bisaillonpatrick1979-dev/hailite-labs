@@ -4,26 +4,50 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#071426" />
-  <meta name="description" content="Hailite Labs — applications, idées pratiques, impression 3D, jeux, vêtements et produits créatifs conçus au Canada." />
+  <!-- AVANT-LANCEMENT : empêche Google d'indexer le site. À RETIRER le jour du lancement (voir README). -->
+  <meta name="robots" content="noindex, nofollow" />
   <title>Hailite Labs — Des idées utiles. Une touche de futur.</title>
+  <meta name="description" content="Hailite Labs — applications, outils pratiques, impression 3D, jeux et vêtements conçus en Alberta. Première application : Hailite Manager, pour les entrepreneurs et les équipes de chantier." />
+  <link rel="canonical" href="https://hailitelabs.com/" />
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/assets/logo.svg" />
+
+  <!-- Aperçu lors d'un partage (Facebook, Messenger, LinkedIn, texto) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Hailite Labs" />
+  <meta property="og:title" content="Hailite Labs — Des idées utiles. Une touche de futur." />
+  <meta property="og:description" content="Applications, outils, impression 3D et produits créatifs conçus en Alberta. Première app : Hailite Manager." />
+  <meta property="og:url" content="https://hailitelabs.com/" />
+  <meta property="og:image" content="https://hailitelabs.com/assets/og-image.png" />
+  <meta property="og:locale" content="fr_CA" />
+  <meta property="og:locale:alternate" content="en_CA" />
+  <meta name="twitter:card" content="summary_large_image" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css" />
+  <link rel="stylesheet" href="/styles.css" />
+
+  <!-- Applique la langue mémorisée avant l'affichage (évite un « flash » en français) -->
+  <script>
+    try { if (localStorage.getItem("hailite-lang") === "en") document.documentElement.classList.add("en"); } catch (e) {}
+  </script>
 </head>
 <body>
+  <a class="skip-link" href="#top"><span data-fr>Aller au contenu</span><span data-en>Skip to content</span></a>
+
   <div class="announcement">
     <span data-fr>Hailite Labs est en construction • Première application en développement</span>
     <span data-en>Hailite Labs is being built • First app now in development</span>
   </div>
 
   <header class="site-header">
-    <a class="brand" href="#top" aria-label="Hailite Labs">
-      <img src="./assets/logo.svg" alt="" class="brand-mark">
+    <a class="brand" href="#top" aria-label="Hailite Labs — accueil">
+      <img src="/assets/logo.svg" alt="" class="brand-mark" width="40" height="40">
       <span class="brand-word">HAILITE <strong>LABS</strong></span>
     </a>
 
-    <nav class="desktop-nav" aria-label="Navigation principale">
+    <nav class="desktop-nav" id="mainNav" aria-label="Navigation principale">
       <a href="#manager">Hailite Manager</a>
       <a href="#lab" data-fr>Le Lab</a><a href="#lab" data-en>The Lab</a>
       <a href="#about" data-fr>À propos</a><a href="#about" data-en>About</a>
@@ -31,14 +55,18 @@
     </nav>
 
     <div class="header-actions">
-      <button class="lang-toggle" id="langToggle" aria-label="Changer la langue">FR <span>/</span> EN</button>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch to English">FR <span>/</span> EN</button>
+      <!-- Bouton menu : visible seulement sur téléphone et tablette -->
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mainNav">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
     </div>
   </header>
 
   <main id="top">
     <section class="hero">
-      <div class="hero-glow hero-glow-a"></div>
-      <div class="hero-glow hero-glow-b"></div>
+      <div class="hero-glow hero-glow-a" aria-hidden="true"></div>
+      <div class="hero-glow hero-glow-b" aria-hidden="true"></div>
 
       <div class="hero-copy">
         <div class="eyebrow" data-fr>CRÉER • BÂTIR • JOUER • SIMPLIFIER</div>
@@ -64,11 +92,11 @@
         </div>
       </div>
 
-      <div class="hero-visual" aria-label="Univers Hailite Labs">
+      <div class="hero-visual" aria-hidden="true">
         <div class="device">
           <div class="device-notch"></div>
           <div class="device-screen">
-            <img src="./assets/logo.svg" alt="" class="phone-logo">
+            <img src="/assets/logo.svg" alt="" class="phone-logo">
             <div class="phone-title">Hailite Labs</div>
             <div class="phone-grid">
               <span>APPS</span><span>3D</span><span>TOOLS</span><span>PLAY</span>
@@ -83,16 +111,16 @@
     </section>
 
     <section class="category-strip" aria-label="Univers Hailite Labs">
-      <a href="#manager" class="category-card"><span class="cat-icon">▣</span><b data-fr>Applications</b><b data-en>Apps</b><small data-fr>Notre premier produit réel est ici.</small><small data-en>Our first real product starts here.</small></a>
-      <a href="#lab" class="category-card"><span class="cat-icon">⬡</span><b data-fr>Impression 3D</b><b data-en>3D Printing</b><small data-fr>Pièces utiles, supports et accessoires.</small><small data-en>Useful parts, mounts and accessories.</small></a>
-      <a href="#lab" class="category-card"><span class="cat-icon">⌁</span><b data-fr>Outils</b><b data-en>Tools</b><small data-fr>Des idées pratiques pour le quotidien.</small><small data-en>Practical ideas for everyday life.</small></a>
-      <a href="#lab" class="category-card"><span class="cat-icon">◈</span><b data-fr>Jeux & Pranks</b><b data-en>Games & Pranks</b><small data-fr>Des petits produits juste pour le fun.</small><small data-en>Small products made just for fun.</small></a>
-      <a href="#lab" class="category-card"><span class="cat-icon">◇</span><b data-fr>Vêtements</b><b data-en>Apparel</b><small data-fr>Québécois, anglophones et Hailite.</small><small data-en>Québec, English and Hailite gear.</small></a>
+      <a href="#manager" class="category-card"><span class="cat-icon" aria-hidden="true">▣</span><b data-fr>Applications</b><b data-en>Apps</b><small data-fr>Notre premier produit réel est ici.</small><small data-en>Our first real product starts here.</small></a>
+      <a href="#lab" class="category-card"><span class="cat-icon" aria-hidden="true">⬡</span><b data-fr>Impression 3D</b><b data-en>3D Printing</b><small data-fr>Pièces utiles, supports et accessoires.</small><small data-en>Useful parts, mounts and accessories.</small></a>
+      <a href="#lab" class="category-card"><span class="cat-icon" aria-hidden="true">⌁</span><b data-fr>Outils</b><b data-en>Tools</b><small data-fr>Des idées pratiques pour le quotidien.</small><small data-en>Practical ideas for everyday life.</small></a>
+      <a href="#lab" class="category-card"><span class="cat-icon" aria-hidden="true">◈</span><b data-fr>Jeux & Pranks</b><b data-en>Games & Pranks</b><small data-fr>Des petits produits juste pour le fun.</small><small data-en>Small products made just for fun.</small></a>
+      <a href="#lab" class="category-card"><span class="cat-icon" aria-hidden="true">◇</span><b data-fr>Vêtements</b><b data-en>Apparel</b><small data-fr>Québécois, anglophones et Hailite.</small><small data-en>Québec, English and Hailite gear.</small></a>
     </section>
 
     <section class="feature-app section manager-section" id="manager">
       <div class="feature-app-copy">
-        <div class="status-pill"><span></span><b data-fr>EN DÉVELOPPEMENT</b><b data-en>IN DEVELOPMENT</b></div>
+        <div class="status-pill"><span aria-hidden="true"></span><b data-fr>EN DÉVELOPPEMENT</b><b data-en>IN DEVELOPMENT</b></div>
         <p class="kicker" data-fr>PREMIER PRODUIT HAILITE LABS</p>
         <p class="kicker" data-en>FIRST HAILITE LABS PRODUCT</p>
         <h2>Hailite Manager</h2>
@@ -100,27 +128,27 @@
         <p data-fr>Une application de gestion pensée pour les entrepreneurs et les équipes de chantier. L'objectif : réunir le temps, les projets, les clients et la facturation dans un outil simple à utiliser sur le terrain.</p>
         <p data-en>A management app built for contractors and field crews. The goal: bring time, projects, clients and invoicing together in one simple tool that works on the jobsite.</p>
 
-        <div class="feature-points">
-          <span>✓ <b data-fr>Temps & punch</b><b data-en>Time & punch</b></span>
-          <span>✓ <b data-fr>Clients & projets</b><b data-en>Clients & projects</b></span>
-          <span>✓ <b data-fr>Facturation</b><b data-en>Invoicing</b></span>
-          <span>✓ <b data-fr>Web + Android</b><b data-en>Web + Android</b></span>
-        </div>
+        <ul class="feature-points">
+          <li>✓ <b data-fr>Temps & punch</b><b data-en>Time & punch</b></li>
+          <li>✓ <b data-fr>Clients & projets</b><b data-en>Clients & projects</b></li>
+          <li>✓ <b data-fr>Facturation</b><b data-en>Invoicing</b></li>
+          <li>✓ <b data-fr>Web + Android</b><b data-en>Web + Android</b></li>
+        </ul>
 
         <div class="manager-actions">
-          <button class="btn btn-primary notify-btn" data-fr>Me prévenir au lancement</button>
-          <button class="btn btn-primary notify-btn" data-en>Notify me at launch</button>
+          <a class="btn btn-primary" href="#contact" data-fr>Me prévenir au lancement</a>
+          <a class="btn btn-primary" href="#contact" data-en>Notify me at launch</a>
           <span class="launch-note" data-fr>Prix et date de lancement à venir.</span>
           <span class="launch-note" data-en>Pricing and launch date coming later.</span>
         </div>
       </div>
 
-      <div class="feature-phone-wrap">
+      <div class="feature-phone-wrap" aria-hidden="true">
         <div class="feature-orbit"></div>
         <div class="device feature-device">
           <div class="device-notch"></div>
           <div class="device-screen manager-ui">
-            <div class="manager-logo"><img src="./assets/logo.svg" alt=""><span>Hailite Manager</span></div>
+            <div class="manager-logo"><img src="/assets/logo.svg" alt=""><span>Hailite Manager</span></div>
             <div class="manager-summary"><small data-fr>AUJOURD'HUI</small><small data-en>TODAY</small><strong>7 h 42</strong></div>
             <div class="manager-modules"><span>TIME</span><span>JOBS</span><span>INVOICE</span><span>CLIENTS</span></div>
           </div>
@@ -142,38 +170,38 @@
 
       <div class="roadmap-grid">
         <article class="roadmap-card is-active">
-          <div class="roadmap-top"><span class="roadmap-icon">▣</span><span class="roadmap-status active" data-fr>ACTIF</span><span class="roadmap-status active" data-en>ACTIVE</span></div>
+          <div class="roadmap-top"><span class="roadmap-icon" aria-hidden="true">▣</span><span class="roadmap-status active" data-fr>ACTIF</span><span class="roadmap-status active" data-en>ACTIVE</span></div>
           <h3>Hailite Manager</h3>
           <p data-fr>Application de gestion pour chantier et entreprise.</p>
           <p data-en>Management app for jobsites and contractors.</p>
-          <div class="progress"><i style="width:72%"></i></div>
+          <div class="progress" role="img" aria-label="72 %"><i style="width:72%"></i></div>
           <small data-fr>Produit réel en développement</small><small data-en>Real product in development</small>
         </article>
 
         <article class="roadmap-card">
-          <div class="roadmap-top"><span class="roadmap-icon">⬡</span><span class="roadmap-status" data-fr>EXPLORATION</span><span class="roadmap-status" data-en>EXPLORATION</span></div>
+          <div class="roadmap-top"><span class="roadmap-icon" aria-hidden="true">⬡</span><span class="roadmap-status">EXPLORATION</span></div>
           <h3 data-fr>Objets imprimés en 3D</h3><h3 data-en>3D-printed products</h3>
           <p data-fr>Crochets, supports, organisateurs et pièces utiles pour outils.</p>
           <p data-en>Hooks, mounts, organizers and useful tool accessories.</p>
-          <div class="progress"><i style="width:18%"></i></div>
+          <div class="progress" role="img" aria-label="18 %"><i style="width:18%"></i></div>
           <small data-fr>Idées et prototypes futurs</small><small data-en>Future ideas and prototypes</small>
         </article>
 
         <article class="roadmap-card">
-          <div class="roadmap-top"><span class="roadmap-icon">◈</span><span class="roadmap-status" data-fr>IDÉES</span><span class="roadmap-status" data-en>IDEAS</span></div>
+          <div class="roadmap-top"><span class="roadmap-icon" aria-hidden="true">◈</span><span class="roadmap-status" data-fr>IDÉES</span><span class="roadmap-status" data-en>IDEAS</span></div>
           <h3 data-fr>Jeux, gadgets & pranks</h3><h3 data-en>Games, gadgets & pranks</h3>
           <p data-fr>Petites applications et objets ludiques conçus juste pour être plaisants.</p>
           <p data-en>Small apps and playful products made simply to be fun.</p>
-          <div class="progress"><i style="width:8%"></i></div>
+          <div class="progress" role="img" aria-label="8 %"><i style="width:8%"></i></div>
           <small data-fr>Pas encore de produit annoncé</small><small data-en>No product announced yet</small>
         </article>
 
         <article class="roadmap-card">
-          <div class="roadmap-top"><span class="roadmap-icon">◇</span><span class="roadmap-status" data-fr>IDÉES</span><span class="roadmap-status" data-en>IDEAS</span></div>
+          <div class="roadmap-top"><span class="roadmap-icon" aria-hidden="true">◇</span><span class="roadmap-status" data-fr>IDÉES</span><span class="roadmap-status" data-en>IDEAS</span></div>
           <h3 data-fr>Vêtements & slogans</h3><h3 data-en>Apparel & slogans</h3>
           <p data-fr>Chandails, hoodies et accessoires avec personnalité québécoise ou anglophone.</p>
           <p data-en>Shirts, hoodies and accessories with Québec or English personality.</p>
-          <div class="progress"><i style="width:6%"></i></div>
+          <div class="progress" role="img" aria-label="6 %"><i style="width:6%"></i></div>
           <small data-fr>Collection à définir</small><small data-en>Collection to be defined</small>
         </article>
       </div>
@@ -206,22 +234,46 @@
     </section>
 
     <section class="newsletter" id="contact">
-      <div>
+      <div class="newsletter-copy">
         <p class="kicker" data-fr>RESTEZ DANS LA BOUCLE</p><p class="kicker" data-en>STAY IN THE LOOP</p>
         <h2 data-fr>Recevez les prochains lancements Hailite Labs.</h2>
         <h2 data-en>Get the next Hailite Labs launches.</h2>
+        <p class="contact-line">
+          <span data-fr>Une question ? Écrivez-nous :</span><span data-en>Questions? Write to us:</span>
+          <a href="mailto:contact@hailitelabs.com">contact@hailitelabs.com</a>
+        </p>
       </div>
-      <form id="newsletterForm">
-        <input type="email" required placeholder="Votre courriel / Your email">
-        <button class="btn btn-primary" type="submit" data-fr>S'inscrire</button>
-        <button class="btn btn-primary" type="submit" data-en>Subscribe</button>
+
+      <!-- Le formulaire fonctionne même sans JavaScript (envoi classique vers l'API) -->
+      <form id="newsletterForm" class="newsletter-form" action="/api/inscription" method="post" novalidate>
+        <div class="form-row">
+          <label class="sr-only" for="courriel"><span data-fr>Votre courriel</span><span data-en>Your email</span></label>
+          <input id="courriel" name="courriel" type="email" autocomplete="email" required maxlength="254" placeholder="vous@exemple.com">
+          <button class="btn btn-primary" type="submit"><span data-fr>S'inscrire</span><span data-en>Subscribe</span></button>
+        </div>
+
+        <!-- Consentement explicite exigé par la Loi canadienne anti-pourriel (LCAP / CASL) -->
+        <label class="consent">
+          <input type="checkbox" name="consentement" value="1" required>
+          <span data-fr>J'accepte de recevoir des courriels de Hailite Labs au sujet de ses lancements. Désabonnement possible en tout temps. <a href="/confidentialite">Confidentialité</a></span>
+          <span data-en>I agree to receive emails from Hailite Labs about its launches. Unsubscribe anytime. <a href="/confidentialite">Privacy</a></span>
+        </label>
+
+        <!-- Piège anti-robots : caché aux humains, laissé vide -->
+        <div class="hp" aria-hidden="true">
+          <label>Site web <input type="text" name="site_web" tabindex="-1" autocomplete="off"></label>
+        </div>
+        <input type="hidden" name="langue" value="fr">
+        <input type="hidden" name="source" value="accueil">
+
+        <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
       </form>
     </section>
   </main>
 
   <footer>
     <div class="footer-brand">
-      <a class="brand" href="#top"><img src="./assets/logo.svg" alt="" class="brand-mark"><span class="brand-word">HAILITE <strong>LABS</strong></span></a>
+      <a class="brand" href="#top"><img src="/assets/logo.svg" alt="" class="brand-mark" width="34" height="34"><span class="brand-word">HAILITE <strong>LABS</strong></span></a>
       <p data-fr>Des idées utiles. Une touche de futur.</p>
       <p data-en>Useful ideas. A touch of future.</p>
     </div>
@@ -234,16 +286,17 @@
       <b data-fr>Explorer</b><b data-en>Explore</b>
       <a href="#lab" data-fr>Le Lab</a><a href="#lab" data-en>The Lab</a>
       <a href="#about" data-fr>À propos</a><a href="#about" data-en>About</a>
-      <a href="#contact">Contact</a>
+      <a href="mailto:contact@hailitelabs.com">contact@hailitelabs.com</a>
     </div>
     <div>
       <b>FR / EN</b>
+      <a href="/confidentialite" data-fr>Confidentialité</a><a href="/confidentialite" data-en>Privacy</a>
       <span>CAD $</span>
-      <span>© 2026 Hailite Labs</span>
+      <span>© <span id="annee">2026</span> Hailite Labs</span>
     </div>
   </footer>
 
-  <div class="toast" id="toast"></div>
-  <script src="./app.js"></script>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,7 @@
+# AVANT-LANCEMENT : bloque les moteurs de recherche.
+# Le jour du lancement, remplacer par :
+#   User-agent: *
+#   Allow: /
+#   Sitemap: https://hailitelabs.com/sitemap.xml
+User-agent: *
+Disallow: /

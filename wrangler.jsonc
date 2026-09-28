@@ -1,0 +1,30 @@
+{
+  // Configuration du Worker Hailite Labs (Cloudflare Workers)
+  // IMPORTANT : le nom doit rester « hailite-labs » (identique au Worker dans Cloudflare)
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "hailite-labs",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-01",
+
+  // Fichiers du site (HTML, CSS, images) servis depuis le dossier public/
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    // Seules les routes /api/* passent par le code du Worker
+    "run_worker_first": ["/api/*"]
+  },
+
+  // Base de données D1 pour les inscriptions à l'infolettre
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "hailite-labs-db",
+      "database_id": "cc6308a1-c310-4991-9467-c3a98be5c6e6",
+      "migrations_dir": "migrations"
+    }
+  ],
+
+  // Journaux visibles dans l'onglet « Observabilité » de Cloudflare
+  "observability": { "enabled": true }
+}
