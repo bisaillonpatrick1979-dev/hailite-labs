@@ -23,7 +23,7 @@
     dialogContent.append(make("h3","detail-label",t().screens));const gallery=make("div","detail-gallery");if(app.screenshots?.length){app.screenshots.forEach((url,i)=>{const img=make("img");img.src=url;img.alt=app.name+" — "+(i+1);img.loading="lazy";gallery.append(img)})}else gallery.append(make("div","detail-blank",t().missing));dialogContent.append(gallery);
     const actions=make("div","detail-actions");actions.append(action(app));const link=webLink(app);if(link)actions.append(link);dialogContent.append(actions);
     const rel=releases[app.slug];if(rel?.available){const meta=make("p","detail-meta",t().version+": "+rel.version+" · "+t().checksum+": "+(rel.sha256||"—"));dialogContent.append(meta)}
-    dialog.showModal()}
+    if(!dialog.open)dialog.showModal()}
   function render(){grid.replaceChildren();const filtered=apps.filter(x=>(category==="all"||x.category===category)&&((x.name+" "+x.fr+" "+x.en).toLowerCase().includes(search)));filtered.forEach(x=>grid.append(card(x)));document.getElementById("appsEmpty").hidden=filtered.length>0;document.getElementById("appsCount").textContent=filtered.length+t().count}
   document.getElementById("closeDialog").addEventListener("click",()=>dialog.close());dialog.addEventListener("click",event=>{if(event.target===dialog)dialog.close()});
   document.querySelectorAll("[data-filter]").forEach(btn=>btn.addEventListener("click",()=>{category=btn.dataset.filter;document.querySelectorAll("[data-filter]").forEach(b=>{const active=b===btn;b.classList.toggle("is-active",active);b.setAttribute("aria-pressed",String(active))});render()}));

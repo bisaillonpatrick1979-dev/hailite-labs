@@ -1,0 +1,30 @@
+name: App catalogue checks
+on:
+  pull_request:
+    paths:
+      - 'public/**'
+      - 'src/index.js'
+      - 'scripts/verify-app-catalog.mjs'
+      - '.github/workflows/app-catalogue.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'public/**'
+      - 'src/index.js'
+      - 'scripts/verify-app-catalog.mjs'
+      - '.github/workflows/app-catalogue.yml'
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: |
+          node --check public/app.js
+          node --check public/applications.js
+          node --check src/index.js
+      - name: Validate catalogue and real image assets
+        run: node scripts/verify-app-catalog.mjs
