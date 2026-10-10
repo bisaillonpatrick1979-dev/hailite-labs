@@ -331,3 +331,23 @@ ul.feature-points{list-style:none;padding:0}
 .pm-montants label:has(input:checked){border-color:#72d3ff;background:#12375e}
 .pm-montants input{accent-color:#4a86ff;width:18px;height:18px}
 #formCredits .btn{width:100%}
+
+
+/* Liescope: responsive playful scanner showcase. */
+.liescope-section{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(25px,5vw,75px);align-items:center;position:relative;margin-top:24px;margin-bottom:24px;overflow:hidden;border:1px solid rgba(100,183,242,.32);border-radius:26px;background:radial-gradient(circle at 85% 42%,rgba(41,142,247,.15),transparent 44%),linear-gradient(135deg,#0b223d,#071527 70%,#061020);box-shadow:0 25px 70px rgba(0,0,0,.2)}
+.liescope-copy{min-width:0;position:relative;z-index:2}.liescope-status{color:#82f2d6;border-color:rgba(91,224,194,.4)}.liescope-status span{background:#55edc2;box-shadow:0 0 10px #55edc2}
+.liescope-copy h2{font-family:"Space Grotesk",sans-serif;font-size:clamp(49px,6vw,82px);letter-spacing:-.045em;line-height:1;margin:8px 0 10px;background:linear-gradient(115deg,#fff,#6fd7f5,#b491fa);background-clip:text;-webkit-background-clip:text;color:transparent}
+.liescope-copy h3{font-family:"Space Grotesk",sans-serif;font-size:clamp(21px,2.4vw,30px);line-height:1.2;margin:0 0 20px;color:#ecfbff}
+.liescope-copy p:not(.kicker){max-width:650px;font-size:clamp(13px,1.3vw,16px);color:#b0c6de;line-height:1.8}
+.liescope-tags{display:flex;flex-wrap:wrap;gap:9px;margin:24px 0}.liescope-tags span{font-size:11px;font-weight:700;padding:8px 11px;border:1px solid rgba(110,184,236,.3);background:rgba(20,65,110,.35);border-radius:9px;color:#d2ebfa}
+.liescope-copy small{display:block;margin-top:15px;font-size:11px;line-height:1.5;color:#8fa6c0}.liescope-actions .btn{min-height:52px;font-size:14px}
+.liescope-preview{display:flex;align-items:center;justify-content:center;min-width:0}.liescope-phone{width:min(100%,330px);padding:17px;border:2px solid #2d749e;border-radius:22px;background:linear-gradient(160deg,#092944,#050b1c 80%);box-shadow:0 25px 55px rgba(0,0,0,.45),0 0 55px rgba(36,161,238,.17);transform:rotate(2deg)}
+.liescope-bar{display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(90,190,228,.3);padding-bottom:13px;font-family:"Space Grotesk";font-size:11px;color:#6fe4fb}.liescope-bar b{flex:1;letter-spacing:3px;font-size:17px}.liescope-bar span{color:#57eabe}.liescope-bar small{color:#ff6d97;font-size:11px}
+.liescope-display{height:222px;display:grid;place-items:center;background:linear-gradient(90deg,transparent 49.8%,#23628233 50%,transparent 50.2%),linear-gradient(transparent 49.8%,#23628233 50%,transparent 50.2%)}
+.liescope-circle{width:183px;height:183px;padding:12px;border-radius:50%;background:conic-gradient(#16dcff,#2663f5,#bf40f2,#16dcff);box-shadow:0 0 25px #2ccafb55}
+.liescope-circle>div{width:100%;height:100%;border-radius:50%;border:2px solid #297ac4;background:radial-gradient(circle,#112a55,#07152e);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#87f1ff}.liescope-circle strong{font-size:44px;text-shadow:0 0 15px #36caff}.liescope-circle small{font-size:10px;letter-spacing:2px}
+.liescope-wave{height:60px;display:flex;align-items:center;gap:4px;padding:10px;border:1px solid #23638a;border-radius:9px;background:#0b2342}.liescope-wave i{flex:1;height:var(--h);background:linear-gradient(#5af8fb,#268df4);border-radius:6px}
+.liescope-outcomes{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.liescope-outcomes span{padding:12px 2px;text-align:center;border:1px solid #36a180;border-radius:8px;color:#75f6c1;font-weight:900;font-size:12px}.liescope-outcomes span:last-child{border-color:#ab3765;color:#fc8bae}
+@media(max-width:900px){.liescope-section{grid-template-columns:1fr 260px;gap:14px}.liescope-phone{transform:none}}
+@media(max-width:720px){.liescope-section{grid-template-columns:1fr;margin:16px 14px;padding:28px 19px}.liescope-preview{padding-top:18px}.liescope-phone{width:min(100%,280px)}.liescope-display{height:176px}.liescope-circle{width:152px;height:152px}.liescope-actions .btn{width:100%}}
+@media(max-width:360px){.liescope-section{padding:24px 14px}.liescope-phone{padding:11px}}
