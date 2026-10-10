@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css" />
-  <style>.apps-store-callout{grid-column:1/-1;width:100%;margin-bottom:25px;border:1px solid #335276;background:linear-gradient(115deg,#102c49,#0a192c);padding:25px;border-radius:20px}.apps-store-callout h2{font:700 clamp(26px,3vw,37px) "Space Grotesk",sans-serif}.apps-store-callout p:not(.kicker){color:#bdd0e4;line-height:1.7}.apps-store-callout .btn{margin-top:8px}</style>
+  <style>.apps-store-callout{grid-column:1/-1;width:100%;margin-bottom:25px;border:1px solid #335276;background:linear-gradient(115deg,#102c49,#0a192c);padding:25px;border-radius:20px}.apps-store-callout h2{font:700 clamp(26px,3vw,37px) "Space Grotesk",sans-serif}.apps-store-callout p:not(.kicker){color:#bdd0e4;line-height:1.7}.apps-store-callout .btn{margin-top:8px} .apps-home-icons{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center;padding:25px}.apps-home-icons img{width:clamp(54px,6vw,85px);height:clamp(54px,6vw,85px);border-radius:18px;border:1px solid #45739a;box-shadow:0 12px 24px #0005;object-fit:cover}</style>
 
   <!-- Applique la langue mémorisée avant l'affichage (évite un « flash » en français) -->
   <script>
@@ -251,18 +251,14 @@
     <section class="store-preview section">
       <div class="apps-store-callout"><p class="kicker">HAILITE LABS / APP COLLECTION</p><h2 data-fr>Explorez nos applications Android et Web</h2><h2 data-en>Explore our Android and Web apps</h2><p data-fr>Jeux, outils et gestion : consultez les fiches, les captures et les options APK dès leur publication.</p><p data-en>Games, tools and business: explore details, screenshots and APK options once available.</p><a class="btn btn-primary" href="/applications"><span data-fr>Ouvrir le catalogue</span><span data-en>Open the catalog</span> →</a></div>
       <div class="store-preview-copy">
-        <p class="kicker" data-fr>LA BOUTIQUE VIENDRA ENSUITE</p>
-        <p class="kicker" data-en>THE SHOP COMES NEXT</p>
-        <h2 data-fr>Quand un produit est prêt,<br>il gagne sa place ici.</h2>
-        <h2 data-en>When a product is ready,<br>it earns its place here.</h2>
-        <p data-fr>Pas de catalogue artificiel. On construit d'abord les produits, ensuite les fiches, les paiements, la livraison et les téléchargements numériques.</p>
-        <p data-en>No artificial catalogue. We build the products first, then product pages, payments, shipping and digital downloads.</p>
+        <p class="kicker" data-fr>NOTRE COLLECTION D’APPLICATIONS</p>
+        <p class="kicker" data-en>OUR APP COLLECTION</p>
+        <h2 data-fr>Des jeux, des outils<br>et des idées qui prennent vie.</h2>
+        <h2 data-en>Games, tools<br>and ideas coming to life.</h2>
+        <p data-fr>Explorez nos neuf applications et projets. Retrouvez les fonctionnalités, les captures d’écran disponibles et bientôt les téléchargements APK Android directs.</p>
+        <p data-en>Explore nine apps and projects, including features, available screenshots and upcoming direct Android APK downloads.</p>
       </div>
-      <div class="store-skeleton" aria-hidden="true">
-        <div class="skeleton-card"><span></span><i></i><i></i><b></b></div>
-        <div class="skeleton-card"><span></span><i></i><i></i><b></b></div>
-        <div class="skeleton-card"><span></span><i></i><i></i><b></b></div>
-      </div>
+      <div class="apps-home-icons" aria-hidden="true"><img src="/app-assets/liescope-icon.png" alt=""><img src="/app-assets/boardgame-icon.png" alt=""><img src="/app-assets/fractura-icon.png" alt=""><img src="/app-assets/invoices-icon.png" alt=""></div>
     </section>
 
     <section class="manifesto section" id="about">
