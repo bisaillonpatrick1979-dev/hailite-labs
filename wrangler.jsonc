@@ -25,6 +25,15 @@
     }
   ],
 
+  // APK Android signés, stockés dans un bucket R2 privé.
+  // Le compartiment doit exister dans le même compte Cloudflare que ce Worker.
+  "r2_buckets": [
+    {
+      "binding": "APP_APKS",
+      "bucket_name": "hailite-labs-apks"
+    }
+  ],
+
   // Abonnements Hailite Manager (voir src/abonnements.js).
   // Les SECRETS (STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, BILLING_API_SECRET)
   // se mettent dans Cloudflare, jamais ici. Tant que les prix sont vides, les
