@@ -77,6 +77,62 @@ async function inscrire(request, env) {
   }
 }
 
+
+// Android APK / Cloudflare R2 — do not expose downloads unless object exists.
+async function lireCatalogue(env, request) {
+  const target = new URL("/app-data.json", request.url);
+  const result = await env.ASSETS.fetch(new Request(target));
+  if (!result.ok) throw new Error("catalogue_unavailable");
+  return (await result.json()).apps || [];
+}
+function apkValide(app) {
+  const apk = app && app.apk;
+  return apk && typeof apk.key === "string"
+    && /^releases\/[a-z0-9][a-z0-9/_-]*\.apk$/.test(apk.key)
+    && typeof apk.version === "string" && /^[0-9][a-zA-Z0-9.+-]{0,39}$/.test(apk.version)
+    && typeof apk.sha256 === "string" && /^[0-9a-f]{64}$/i.test(apk.sha256);
+}
+async function releases(request, env) {
+  if (!env.APP_APKS) return json({ releases: [] });
+  try {
+    const apps = await lireCatalogue(env, request);
+    const available = await Promise.all(apps.filter(apkValide).map(async app => {
+      try {
+        const object = await env.APP_APKS.head(app.apk.key);
+        if (!object) return null;
+        return { slug: app.slug, available: true, version: app.apk.version,
+          fileName: app.slug + "-" + app.apk.version + ".apk", sha256: app.apk.sha256, bytes: object.size };
+      } catch { return null; }
+    }));
+    return json({ releases: available.filter(Boolean) });
+  } catch {
+    return json({ releases: [] }, 503);
+  }
+}
+async function telechargerApk(request, env, slug) {
+  if (!env.APP_APKS || !/^[a-z0-9-]{1,60}$/.test(slug)) {
+    return new Response("APK indisponible", { status: 404, headers: { "cache-control":"no-store" } });
+  }
+  try {
+    const apps = await lireCatalogue(env, request);
+    const app = apps.find(item => item.slug === slug);
+    if (!apkValide(app)) return new Response("APK indisponible", { status: 404 });
+    const object = await env.APP_APKS.get(app.apk.key);
+    if (!object || !object.body) return new Response("APK indisponible", { status: 404 });
+    const fileName = app.slug + "-" + app.apk.version + ".apk";
+    const headers = new Headers({
+      "content-type":"application/vnd.android.package-archive",
+      "content-disposition": 'attachment; filename="' + fileName + '"',
+      "x-content-type-options":"nosniff",
+      "cache-control":"private, no-store",
+      "content-length":String(object.size)
+    });
+    return new Response(object.body, { status: 200, headers });
+  } catch {
+    return new Response("Téléchargement temporairement indisponible", { status:503 });
+  }
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -115,6 +171,12 @@ export default {
       return webhookStripe(request, env);
     }
 
+    if (url.pathname === "/api/apps/releases" && request.method === "GET") {
+      return releases(request, env);
+    }
+    if (url.pathname.startsWith("/api/download/") && request.method === "GET") {
+      return telechargerApk(request, env, url.pathname.slice("/api/download/".length));
+    }
     if (url.pathname.startsWith("/api/")) {
       return json({ ok: false, erreur: "introuvable" }, 404);
     }

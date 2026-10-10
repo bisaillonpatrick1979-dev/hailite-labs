@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 1,
+  "updated": "2026-10-10",
+  "apps": [
+    {
+      "slug": "hailite-manager",
+      "name": "Hailite Manager",
+      "category": "business",
+      "stage": "development",
+      "icon": "/assets/logo.svg",
+      "accent": "#f1a44c",
+      "fr": "Gestion de chantiers, équipes, pointage, documents et facturation.",
+      "en": "Jobsites, crews, time tracking, documents and invoicing.",
+      "featuresFr": [
+        "Pointage et horaires",
+        "Chantiers et équipes",
+        "Devis, contrats et factures"
+      ],
+      "featuresEn": [
+        "Time tracking and schedules",
+        "Jobsites and crews",
+        "Quotes, contracts and invoices"
+      ],
+      "screenshots": [
+        "/app-assets/hailite-manager-documents.png",
+        "/app-assets/hailite-manager-statistiques.png"
+      ],
+      "webUrl": "/hailite-manager",
+      "apk": null
+    },
+    {
+      "slug": "liescope",
+      "name": "Liescope",
+      "category": "games",
+      "stage": "web",
+      "icon": "/app-assets/liescope-icon.png",
+      "accent": "#3fc6ff",
+      "fr": "Un faux détecteur de mensonge humoristique à cinq interfaces, contrôlé par une légère inclinaison.",
+      "en": "A playful pretend lie detector with five looks and discreet tilt controls.",
+      "featuresFr": [
+        "5 interfaces uniques",
+        "Gyroscope et sons",
+        "FR, EN, ES"
+      ],
+      "featuresEn": [
+        "5 unique interfaces",
+        "Motion controls and sound",
+        "FR, EN, ES"
+      ],
+      "screenshots": [],
+      "webUrl": "https://liescope.vercel.app/",
+      "apk": null
+    },
+    {
+      "slug": "boardgame-helper",
+      "name": "Board Game Helper",
+      "category": "games",
+      "stage": "development",
+      "icon": "/app-assets/boardgame-icon.png",
+      "accent": "#9c8bff",
+      "fr": "Dés, cartes, minuteurs, scores et aides pour les soirées de jeux de société.",
+      "en": "Dice, cards, timers, scores and tabletop game helpers.",
+      "featuresFr": [
+        "Dés et cartes virtuels",
+        "Scores et outils de table",
+        "Mode hors ligne"
+      ],
+      "featuresEn": [
+        "Virtual dice and cards",
+        "Scoreboards and helpers",
+        "Offline mode"
+      ],
+      "screenshots": [],
+      "webUrl": null,
+      "apk": null
+    },
+    {
+      "slug": "spoontrotter",
+      "name": "Spoontrotter",
+      "category": "lifestyle",
+      "stage": "development",
+      "icon": null,
+      "accent": "#f3b36f",
+      "fr": "Recettes de la planète, découvertes par pays et communauté culinaire.",
+      "en": "World recipes, discoveries by country and a cooking community.",
+      "featuresFr": [
+        "Explorer par pays",
+        "Recettes illustrées",
+        "Portions adaptables"
+      ],
+      "featuresEn": [
+        "Explore by country",
+        "Illustrated recipes",
+        "Adjustable servings"
+      ],
+      "screenshots": [],
+      "webUrl": null,
+      "apk": null
+    },
+    {
+      "slug": "invoices-simple",
+      "name": "Invoices Simple",
+      "category": "business",
+      "stage": "development",
+      "icon": "/app-assets/invoices-icon.png",
+      "accent": "#74d5ed",
+      "fr": "Devis et factures sur téléphone avec PDF, clients et suivi des paiements.",
+      "en": "Mobile quotes and invoices with PDFs, clients and payment tracking.",
+      "featuresFr": [
+        "Factures et devis PDF",
+        "Clients et articles",
+        "Suivi des paiements"
+      ],
+      "featuresEn": [
+        "PDF invoices and quotes",
+        "Clients and items",
+        "Payment tracking"
+      ],
+      "screenshots": [],
+      "webUrl": null,
+      "apk": null
+    },
+    {
+      "slug": "fractura",
+      "name": "Fractura",
+      "category": "games",
+      "stage": "development",
+      "icon": "/app-assets/fractura-icon.png",
+      "accent": "#e99b77",
+      "fr": "Jeu de stratégie et de conquête au tour par tour pour 2 à 6 joueurs.",
+      "en": "Turn-based strategy and conquest game for 2 to 6 players.",
+      "featuresFr": [
+        "48 régions",
+        "Jeu local ou contre l'IA",
+        "Stratégie au tour par tour"
+      ],
+      "featuresEn": [
+        "48 regions",
+        "Local play or AI opponents",
+        "Turn-based strategy"
+      ],
+      "screenshots": [],
+      "webUrl": null,
+      "apk": null
+    },
+    {
+      "slug": "pixel-bros",
+      "name": "Pixel Bros: Skyward Run",
+      "category": "games",
+      "stage": "development",
+      "icon": null,
+      "accent": "#8bef9c",
+      "fr": "Jeu de plateformes rétro original avec commandes tactiles.",
+      "en": "Original retro platform game with touchscreen controls.",
+      "featuresFr": [
+        "3 niveaux",
+        "Commandes tactiles",
+        "Mode plein écran"
+      ],
+      "featuresEn": [
+        "3 levels",
+        "Touch controls",
+        "Fullscreen play"
+      ],
+      "screenshots": [],
+      "webUrl": null,
+      "apk": null
+    },
+    {
+      "slug": "duel-arena",
+      "name": "Duel Arena",
+      "category": "games",
+      "stage": "concept",
+      "icon": null,
+      "accent": "#f0c569",
+      "fr": "Mini-jeux compétitifs, duels entre amis et tournois gratuits.",
+      "en": "Competitive mini-games, friend challenges and free tournaments.",
+      "featuresFr": [
+        "Puzzle Clash",
+        "Reflex Arena",
+        "Mini Golf Duel"
+      ],
+      "featuresEn": [
+        "Puzzle Clash",
+        "Reflex Arena",
+        "Mini Golf Duel"
+      ],
+      "screenshots": [],
+      "webUrl": null,
+      "apk": null
+    },
+    {
+      "slug": "fable6",
+      "name": "Fable6 Gestion",
+      "category": "business",
+      "stage": "development",
+      "icon": null,
+      "accent": "#8fc9fc",
+      "fr": "Projet expérimental de gestion d'entreprise et de chantier avec assistants IA.",
+      "en": "Experimental business and jobsite management project with AI assistants.",
+      "featuresFr": [
+        "Chantiers et pointage",
+        "Inventaire et dépenses",
+        "Assistants IA"
+      ],
+      "featuresEn": [
+        "Jobsites and time tracking",
+        "Inventory and expenses",
+        "AI assistants"
+      ],
+      "screenshots": [],
+      "webUrl": null,
+      "apk": null
+    }
+  ]
+}

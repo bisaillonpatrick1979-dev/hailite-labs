@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071426">
+  <meta name="description" content="Explorez les applications et jeux Hailite Labs. Fiches, captures d'écran réelles, versions Android APK et essais Web.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://hailitelabs.com/applications">
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
+  <meta property="og:title" content="Applications Android et jeux | Hailite Labs">
+  <meta property="og:description" content="Découvrez les applications Hailite Labs, leurs captures et leurs options de téléchargement Android.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://hailitelabs.com/assets/og-image.png">
+  <title>Applications et jeux | Hailite Labs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/applications.css">
+  <script>try { if (localStorage.getItem("hailite-lang")==="en") document.documentElement.classList.add("en"); } catch(e) {}</script>
+</head>
+<body data-page-title-fr="Applications et jeux | Hailite Labs" data-page-title-en="Apps and games | Hailite Labs">
+  <a class="skip-link" href="#main"><span data-fr>Aller aux applications</span><span data-en>Skip to applications</span></a>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Hailite Labs, accueil">
+      <img src="/assets/logo.svg" alt="" class="brand-mark" width="40" height="40">
+      <span class="brand-word">HAILITE <strong>LABS</strong></span>
+    </a>
+    <nav class="desktop-nav" id="mainNav" aria-label="Navigation principale">
+      <a href="/"><span data-fr>Accueil</span><span data-en>Home</span></a>
+      <a href="#catalogue"><span data-fr>Applications</span><span data-en>Apps</span></a>
+      <a href="#installation"><span data-fr>Installer un APK</span><span data-en>Install an APK</span></a>
+      <a href="/#contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch to English">FR <span>/</span> EN</button>
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="mainNav">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+      </button>
+    </div>
+  </header>
+  <main id="main">
+    <section class="apps-hero">
+      <div class="apps-hero-copy">
+        <p class="kicker">HAILITE LABS / APP COLLECTION</p>
+        <h1 data-fr>Nos applications.<br><span>Votre prochaine découverte.</span></h1>
+        <h1 data-en>Our applications.<br><span>Your next discovery.</span></h1>
+        <p data-fr>Découvrez nos outils, jeux et projets mobiles. Pour chaque application : fonctionnalités, captures d'écran lorsqu'elles sont disponibles et téléchargements Android dès la publication d'un APK signé.</p>
+        <p data-en>Explore our mobile tools, games and projects. Each app has its features, screenshots where available, and Android downloads once a signed APK is published.</p>
+        <div class="apps-hero-actions">
+          <a class="btn btn-primary" href="#catalogue"><span data-fr>Voir les applications</span><span data-en>Browse apps</span> ↓</a>
+          <a class="btn btn-ghost" href="#installation"><span data-fr>Comment installer</span><span data-en>How to install</span></a>
+        </div>
+        <p class="apps-trust"><span>✓ Android</span><span>✓ FR / EN</span><span data-fr>✓ APK directement sur ce site (lorsqu'il sera prêt)</span><span data-en>✓ Direct APKs when ready</span></p>
+      </div>
+      <div class="apps-hero-art" aria-hidden="true">
+        <span class="orbit orbit-one"></span><span class="orbit orbit-two"></span>
+        <div class="apps-phone"><div class="apps-phone-bar"></div><img src="/assets/logo.svg" alt=""><strong>HAILITE LABS</strong><small>APP COLLECTION</small><div class="apps-phone-icons"><span>◈</span><span>⬡</span><span>◇</span><span>✦</span></div></div>
+      </div>
+    </section>
+    <section id="catalogue" class="section apps-section">
+      <div class="section-heading">
+        <div><p class="kicker">APPS / GAMES / TOOLS</p><h2 data-fr>Explorer le catalogue</h2><h2 data-en>Explore the collection</h2></div>
+        <p class="apps-count" id="appsCount" aria-live="polite"></p>
+      </div>
+      <div class="apps-tools">
+        <label class="apps-search-label" for="appsSearch"><span data-fr>Rechercher une application</span><span data-en>Search applications</span></label>
+        <input id="appsSearch" type="search" autocomplete="off" placeholder="Rechercher / Search..." aria-label="Rechercher des applications">
+        <div class="apps-filters" id="appsFilters" role="group" aria-label="Categories">
+          <button class="filter-btn is-active" type="button" data-filter="all" aria-pressed="true"><span data-fr>Toutes</span><span data-en>All</span></button>
+          <button class="filter-btn" type="button" data-filter="games" aria-pressed="false"><span data-fr>Jeux</span><span data-en>Games</span></button>
+          <button class="filter-btn" type="button" data-filter="business" aria-pressed="false"><span data-fr>Gestion</span><span data-en>Business</span></button>
+          <button class="filter-btn" type="button" data-filter="lifestyle" aria-pressed="false"><span data-fr>Style de vie</span><span data-en>Lifestyle</span></button>
+        </div>
+      </div>
+      <p class="apps-note" data-fr>Les téléchargements APK sont proposés uniquement lorsqu'une version Android signée est réellement disponible sur nos serveurs.</p>
+      <p class="apps-note" data-en>APK downloads are only offered when a signed Android package is actually available on our servers.</p>
+      <div class="apps-grid" id="appsGrid" aria-live="polite"></div>
+      <p class="apps-empty" id="appsEmpty" hidden><span data-fr>Aucune application trouvée.</span><span data-en>No applications found.</span></p>
+      <noscript><p>Activez JavaScript pour afficher le catalogue. / Enable JavaScript to browse the catalog.</p></noscript>
+    </section>
+    <section class="section install-section" id="installation">
+      <p class="kicker">ANDROID APK / DIRECT INSTALL</p>
+      <h2 data-fr>Installer sans Google Play Store</h2><h2 data-en>Install without Google Play Store</h2>
+      <p class="install-lead" data-fr>Lorsqu'un APK est disponible, vous le téléchargez depuis Hailite Labs. Il devient une vraie application Android avec sa propre icône et ne nécessite pas d'ouvrir le navigateur pour être lancé.</p>
+      <p class="install-lead" data-en>Once an APK is available, download it from Hailite Labs. It installs as a real Android app with its own icon; you won't need a browser to launch it.</p>
+      <div class="install-steps">
+        <article><span>01</span><h3 data-fr>Télécharger</h3><h3 data-en>Download</h3><p data-fr>Sur votre téléphone Android, touchez « Télécharger APK » dans la fiche d'une application publiée.</p><p data-en>On an Android phone, tap “Download APK” on a published app page.</p></article>
+        <article><span>02</span><h3 data-fr>Autoriser et confirmer</h3><h3 data-en>Allow and confirm</h3><p data-fr>Ouvrez le fichier téléchargé. Si Android le demande, autorisez cette source à installer l'application, puis confirmez. Ne contournez pas les alertes de sécurité.</p><p data-en>Open the downloaded file. If prompted, allow installation from this source and confirm. Do not bypass security warnings.</p></article>
+        <article><span>03</span><h3 data-fr>Ouvrir l'application</h3><h3 data-en>Open the app</h3><p data-fr>Retrouvez l'icône parmi vos applications et placez-la sur l'écran d'accueil si vous le souhaitez.</p><p data-en>Find its icon among your apps and add it to your home screen if you wish.</p></article>
+      </div>
+      <div class="install-safety">
+        <strong data-fr>Conseils de sécurité</strong><strong data-en>Security tips</strong>
+        <p data-fr>Téléchargez uniquement depuis le site officiel. Les versions seront signées et accompagnées de leur numéro de version et empreinte SHA-256. Android exige toujours votre confirmation pour installer un APK; un site Web ne peut pas l'installer automatiquement. Les APK ne fonctionnent pas sur iPhone.</p>
+        <p data-en>Only download from the official site. Releases will be signed and show their version and SHA-256 checksum. Android still requires confirmation to install an APK; websites cannot install it silently. APKs do not work on iPhone.</p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="footer-brand"><a class="brand" href="/"><img src="/assets/logo.svg" alt="" class="brand-mark" width="34" height="34"><span class="brand-word">HAILITE <strong>LABS</strong></span></a><p data-fr>Des idées utiles. Une touche de futur.</p><p data-en>Useful ideas. A touch of future.</p></div>
+    <div><b data-fr>Catalogue</b><b data-en>Catalog</b><a href="#catalogue"><span data-fr>Applications</span><span data-en>Apps</span></a><a href="#installation">Android APK</a></div>
+    <div><b>Hailite Labs</b><a href="/">Accueil / Home</a><a href="/#contact">Contact</a></div>
+    <div><b>FR / EN</b><a href="/confidentialite"><span data-fr>Confidentialité</span><span data-en>Privacy</span></a><span>© <span id="annee">2026</span> Hailite Labs</span></div>
+  </footer>
+  <dialog id="appDialog" class="app-dialog" aria-labelledby="detailTitle"><div id="appDialogContent"></div><button class="dialog-close" id="closeDialog" type="button" aria-label="Fermer / Close">×</button></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js" defer></script>
+  <script src="/applications.js" defer></script>
+</body>
+</html>

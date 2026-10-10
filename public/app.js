@@ -33,9 +33,13 @@ function setLanguage(lang) {
   const champLangue = $("#newsletterForm input[name='langue']");
   if (champLangue) champLangue.value = lang;
 
-  document.title = lang === "fr"
-    ? "Hailite Labs — Des idées utiles. Une touche de futur."
-    : "Hailite Labs — Useful ideas. A touch of future.";
+  if (document.body.dataset.pageTitleFr && document.body.dataset.pageTitleEn) {
+    document.title = lang === "fr" ? document.body.dataset.pageTitleFr : document.body.dataset.pageTitleEn;
+  } else {
+    document.title = lang === "fr"
+      ? "Hailite Labs — Des idées utiles. Une touche de futur."
+      : "Hailite Labs — Useful ideas. A touch of future.";
+  }
 }
 
 $("#langToggle")?.addEventListener("click", () => {

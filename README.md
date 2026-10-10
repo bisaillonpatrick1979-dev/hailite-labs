@@ -48,3 +48,18 @@ wrangler.jsonc          ← configuration Cloudflare (le nom doit rester « hail
 - Outil d'envoi de l'infolettre (avec lien de désabonnement)
 
 © 2026 Hailite Labs
+
+## Catalogue Android / APK (octobre 2026)
+
+- Catalogue bilingue : `/applications` (`public/applications.html`, `public/applications.js`, `public/applications.css`).
+- Données éditoriales : `public/app-data.json` (statut, icône, URL Web, captures réelles, APK).
+- Captures Hailite Manager : `public/app-assets/` (copies des captures de boutique du dépôt original).
+- Vérification de téléchargement : `GET /api/apps/releases` (liste les APK effectivement présents dans R2).
+- Téléchargement direct : `GET /api/download/:slug` (flux binaire avec en-tête Android et nom de fichier).
+- **Aucun APK publié actuellement.** Ne pas ajouter de lien qui pointe vers un fichier inexistant.
+- Pour activer les APK : créer un bucket R2 `hailite-labs-apks` dans Cloudflare, ajouter au `wrangler.jsonc` le binding `r2_buckets: [{ "binding":"APP_APKS", "bucket_name":"hailite-labs-apks" }]`, puis déployer.
+- Construire et signer l'APK de production (même clé et `applicationId` pour toutes les mises à jour d'une même application), vérifier l'APK et calculer son SHA-256.
+- Déposer le fichier dans R2 à la clé `releases/<slug>/<slug>-<version>.apk`, puis renseigner `apk: {"key":"releases/<slug>/<slug>-<version>.apk","version":"1.0.0","sha256":"<64 caractères hexadécimaux>"}` dans la fiche du produit.
+- Après déploiement, `/api/apps/releases` n'affichera un APK que si la configuration, le manifeste et le fichier R2 correspondent. Tester le téléchargement depuis un vrai téléphone Samsung/Android avant toute annonce publique.
+- Ajouter uniquement de **vraies captures d'écran**. Quand il n'y en a pas, l'interface indique clairement qu'elles sont à venir.
+- Faire approuver les politiques applicables aux distributions hors boutique; ne pas tenter d'installation Android silencieuse.

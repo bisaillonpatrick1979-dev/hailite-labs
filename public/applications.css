@@ -1,0 +1,40 @@
+/* Hailite Labs — responsive catalogue & Android download */
+.apps-hero{max-width:var(--max);margin:auto;padding:85px clamp(22px,5vw,70px) 58px;display:grid;grid-template-columns:1.3fr .7fr;align-items:center;gap:38px;position:relative}
+.apps-hero:before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 78% 42%,rgba(52,138,255,.17),transparent 38%)}
+.apps-hero-copy{position:relative;z-index:1}.apps-hero h1{font:700 clamp(42px,5vw,76px)/1.03 "Space Grotesk",sans-serif;letter-spacing:-.045em;margin:20px 0 25px}
+.apps-hero h1 span{color:#85baff}.apps-hero-copy>p:not(.kicker):not(.apps-trust){max-width:700px;color:#b8cadf;font-size:17px;line-height:1.75}
+.apps-hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0}.apps-trust{display:flex;flex-wrap:wrap;gap:18px;color:#88adcc;font-size:12px}
+.apps-hero-art{height:335px;position:relative;display:grid;place-items:center}.orbit{position:absolute;border-radius:50%;border:1px solid rgba(104,172,245,.17)}.orbit-one{width:295px;height:295px}.orbit-two{width:365px;height:365px}
+.apps-phone{height:288px;width:179px;border:8px solid #162a40;border-radius:30px;background:linear-gradient(155deg,#163658,#070d1d 75%);box-shadow:0 32px 80px #0008,0 0 42px #3185ff22;display:flex;align-items:center;flex-direction:column;padding:14px;transform:rotate(5deg)}
+.apps-phone-bar{height:7px;width:49px;border-radius:10px;background:#25435f;margin-bottom:24px}.apps-phone img{width:50px;height:50px}.apps-phone strong{font:700 14px "Space Grotesk",sans-serif;letter-spacing:.12em;margin-top:14px}.apps-phone small{font-size:9px;color:#81b2da;letter-spacing:.22em;margin:6px 0 15px}
+.apps-phone-icons{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;width:100%}.apps-phone-icons span{border-radius:8px;padding:7px 1px;text-align:center;background:#123b65;color:#8fd7ff}
+.apps-section{padding-top:36px}.apps-section .section-heading h2{margin:10px 0 0;font:700 clamp(30px,4vw,46px) "Space Grotesk",sans-serif}
+.apps-count{font-size:13px;color:#8baccc}.apps-tools{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:22px 0}.apps-search-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+#appsSearch{background:#0e2137;border:1px solid #294261;border-radius:12px;color:#eef6ff;font-size:15px;padding:15px 17px;min-height:50px;width:min(100%,350px)}
+#appsSearch:focus,.filter-btn:focus-visible,.app-more:focus-visible,.dialog-close:focus-visible{outline:2px solid #80c4ff;outline-offset:3px}
+.apps-filters{display:flex;flex-wrap:wrap;gap:8px}.filter-btn{border:1px solid #30455b;background:#112337;color:#b9cde1;padding:12px 16px;border-radius:10px;font-size:13px;font-weight:800}
+.filter-btn.is-active{color:#071522;background:linear-gradient(120deg,#87d5ff,#78a8fa);border-color:transparent}.apps-note{font-size:12px;color:#92abc3;line-height:1.65;max-width:950px}
+.apps-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:28px}.app-card{border:1px solid #223d57;background:linear-gradient(160deg,#10223a,#0a1525);border-radius:20px;padding:22px;display:flex;flex-direction:column;gap:15px;min-width:0}
+.app-card:hover{border-color:#5382b7}.app-card-head{display:flex;gap:14px;align-items:center}.app-icon{width:66px;height:66px;flex:0 0 66px;display:grid;place-items:center;border:1px solid #6d9bd744;border-radius:16px;background:linear-gradient(145deg,#173351,#081929);object-fit:cover;overflow:hidden}
+.app-icon img{width:100%;height:100%;object-fit:cover}.app-glyph{font:700 29px "Space Grotesk",sans-serif;color:var(--accent,#8ad2ff)}.app-card h3{font:700 21px "Space Grotesk",sans-serif;line-height:1.15;margin:0 0 8px;overflow-wrap:anywhere}.app-stage{font-size:10px;font-weight:800;letter-spacing:.05em;border-radius:99px;padding:6px 9px;background:#1c3550;color:#a5d7ff;display:inline-block}
+.app-stage[data-stage="concept"]{background:#3c3031;color:#f9c087}.app-stage[data-stage="web"]{background:#143f36;color:#9df6d1}
+.app-copy{color:#b1c4d8;line-height:1.6;font-size:13px;margin:0;flex:1}.app-thumb{background:linear-gradient(135deg,#172f4a,#081523);border:1px solid #254261;border-radius:12px;min-height:122px;overflow:hidden;display:flex;align-items:center;justify-content:center;color:#83a8ce;font-size:12px;text-align:center}
+.app-thumb img{height:154px;object-fit:cover;object-position:top center;max-width:100%}.app-thumb:has(img){background:#07101c}.app-actions{display:flex;flex-wrap:wrap;gap:9px}
+.app-more,.app-download,.app-web,.app-notready{border-radius:11px;min-height:46px;padding:12px 13px;display:inline-flex;align-items:center;justify-content:center;text-align:center;font-weight:800;font-size:12px;line-height:1.35}
+.app-more{flex:1;background:#24569a;color:#f5f9ff;border:1px solid #417bd0;cursor:pointer}.app-more:hover{background:#316ec1}
+.app-download{background:#9fe6ff;color:#071522;border:1px solid #9fe6ff}.app-download:hover{background:#c5f1ff}.app-notready{background:#112437;color:#96abc1;border:1px solid #29435c;cursor:not-allowed;flex:1}
+.app-web{background:#172b42;border:1px solid #3c5778;color:#dceafd}.app-web:hover{background:#213c5e}
+.apps-empty{padding:30px;text-align:center;color:#c6d8e9}
+.install-section{border-top:1px solid #17304d}.install-section h2{font:700 clamp(31px,4vw,45px) "Space Grotesk",sans-serif}.install-lead{max-width:830px;line-height:1.8;color:#b1c9e3}
+.install-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:28px 0}.install-steps article{padding:22px;background:#0d2034;border:1px solid #254461;border-radius:17px}
+.install-steps article>span{font:700 27px "Space Grotesk",sans-serif;color:#82c9ff}.install-steps h3{font-size:19px}.install-steps p{font-size:13px;color:#b5cade;line-height:1.75}
+.install-safety{max-width:950px;border:1px solid #5a4a2b;background:#241f19;border-radius:15px;padding:20px}.install-safety strong{color:#ffd79d}.install-safety p{color:#d2c3b0;font-size:13px;line-height:1.75}
+.app-dialog{color:#f3f8ff;background:#0c1b2e;border:1px solid #395b7b;border-radius:22px;width:min(94vw,760px);max-height:90dvh;padding:28px;box-shadow:0 30px 90px #000c}.app-dialog::backdrop{background:#000b;backdrop-filter:blur(3px)}
+.dialog-close{position:absolute;right:16px;top:15px;border:1px solid #47617d;border-radius:50%;background:#1e3550;color:white;width:40px;height:40px;font-size:27px;line-height:1}
+.detail-head{display:flex;align-items:center;gap:16px;padding-right:34px}.detail-head h2{font:700 clamp(23px,4vw,34px) "Space Grotesk",sans-serif;margin:0 0 8px}.detail-lead{color:#c6d7e9;line-height:1.7}.detail-features{padding-left:22px;color:#cee0f1;line-height:1.9}
+.detail-label{margin:28px 0 12px;font-size:16px}.detail-gallery{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px 0 20px}.detail-gallery img{height:300px;max-width:80%;width:auto;border-radius:13px;border:1px solid #365575;scroll-snap-align:start}
+.detail-blank{background:#12263f;border:1px dashed #486585;border-radius:13px;padding:25px;color:#b7c9da;text-align:center}
+.detail-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.detail-meta{font-size:12px;color:#98b1c8;overflow-wrap:anywhere;line-height:1.7}
+@media(max-width:1040px){.apps-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.apps-hero{grid-template-columns:1fr .65fr}}
+@media(max-width:700px){.apps-hero{grid-template-columns:1fr;padding:46px 20px 20px;gap:5px}.apps-hero-art{height:190px}.apps-phone{transform:scale(.62) rotate(4deg)}.orbit-one{width:225px;height:225px}.orbit-two{width:290px;height:290px}.apps-grid{grid-template-columns:1fr}.apps-tools{align-items:stretch;flex-direction:column}#appsSearch{width:100%;min-width:0}.apps-filters{gap:6px}.filter-btn{padding:12px}.install-steps{grid-template-columns:1fr}.apps-section{padding-top:45px}.apps-trust{gap:10px}.app-dialog{padding:20px;width:96vw}.detail-gallery img{height:240px}.app-card{padding:18px}}
+@media(prefers-reduced-motion:reduce){.apps-hero *,.app-card{transition:none!important;animation:none!important}}
