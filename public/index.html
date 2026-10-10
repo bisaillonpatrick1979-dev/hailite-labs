@@ -27,6 +27,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css" />
+  <style>.apps-store-callout{grid-column:1/-1;width:100%;margin-bottom:25px;border:1px solid #335276;background:linear-gradient(115deg,#102c49,#0a192c);padding:25px;border-radius:20px}.apps-store-callout h2{font:700 clamp(26px,3vw,37px) "Space Grotesk",sans-serif}.apps-store-callout p:not(.kicker){color:#bdd0e4;line-height:1.7}.apps-store-callout .btn{margin-top:8px}</style>
 
   <!-- Applique la langue mémorisée avant l'affichage (évite un « flash » en français) -->
   <script>
@@ -48,6 +49,8 @@
     </a>
 
     <nav class="desktop-nav" id="mainNav" aria-label="Navigation principale">
+      <a href="/applications"><span data-fr>Applications</span><span data-en>Apps</span></a>
+      <a href="/applications"><span data-fr>Toutes les applications</span><span data-en>All applications</span></a>
       <a href="/hailite-manager">Hailite Manager</a>
       <a href="#liescope">Liescope</a>
       <a href="#lab" data-fr>Le Lab</a><a href="#lab" data-en>The Lab</a>
@@ -80,8 +83,8 @@
         <p data-en>Hailite Labs is an idea workshop: apps, digital tools, 3D-printed objects, games, apparel and products we actually want to use.</p>
 
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#manager" data-fr>Découvrir nos applications</a>
-          <a class="btn btn-primary" href="#manager" data-en>Explore our apps</a>
+          <a class="btn btn-primary" href="/applications" data-fr>Découvrir nos applications</a>
+          <a class="btn btn-primary" href="/applications" data-en>Explore our apps</a>
           <a class="btn btn-ghost" href="#liescope" data-fr>Essayer Liescope</a>
           <a class="btn btn-ghost" href="#liescope" data-en>Try Liescope</a>
         </div>
@@ -112,7 +115,7 @@
     </section>
 
     <section class="category-strip" aria-label="Univers Hailite Labs">
-      <a href="#manager" class="category-card"><span class="cat-icon" aria-hidden="true">▣</span><b data-fr>Applications</b><b data-en>Apps</b><small data-fr>Notre premier produit réel est ici.</small><small data-en>Our first real product starts here.</small></a>
+      <a href="/applications" class="category-card"><span class="cat-icon" aria-hidden="true">▣</span><b data-fr>Applications</b><b data-en>Apps</b><small data-fr>Notre premier produit réel est ici.</small><small data-en>Our first real product starts here.</small></a>
       <a href="#lab" class="category-card"><span class="cat-icon" aria-hidden="true">⬡</span><b data-fr>Impression 3D</b><b data-en>3D Printing</b><small data-fr>Pièces utiles, supports et accessoires.</small><small data-en>Useful parts, mounts and accessories.</small></a>
       <a href="#lab" class="category-card"><span class="cat-icon" aria-hidden="true">⌁</span><b data-fr>Outils</b><b data-en>Tools</b><small data-fr>Des idées pratiques pour le quotidien.</small><small data-en>Practical ideas for everyday life.</small></a>
       <a href="#liescope" class="category-card"><span class="cat-icon" aria-hidden="true">◈</span><b data-fr>Jeux & Pranks</b><b data-en>Games & Pranks</b><small data-fr>Liescope : une application juste pour le fun.</small><small data-en>Liescope: a prank app just for fun.</small></a>
@@ -246,6 +249,7 @@
     </section>
 
     <section class="store-preview section">
+      <div class="apps-store-callout"><p class="kicker">HAILITE LABS / APP COLLECTION</p><h2 data-fr>Explorez nos applications Android et Web</h2><h2 data-en>Explore our Android and Web apps</h2><p data-fr>Jeux, outils et gestion : consultez les fiches, les captures et les options APK dès leur publication.</p><p data-en>Games, tools and business: explore details, screenshots and APK options once available.</p><a class="btn btn-primary" href="/applications"><span data-fr>Ouvrir le catalogue</span><span data-en>Open the catalog</span> →</a></div>
       <div class="store-preview-copy">
         <p class="kicker" data-fr>LA BOUTIQUE VIENDRA ENSUITE</p>
         <p class="kicker" data-en>THE SHOP COMES NEXT</p>
