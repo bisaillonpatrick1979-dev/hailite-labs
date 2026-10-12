@@ -86,6 +86,10 @@ async function lireCatalogue(env, request) {
   return (await result.json()).apps || [];
 }
 function apkValide(app) {
+  // Une route de téléchargement publique n'est utilisable QUE pour une app
+  // explicitement GRATUITE. Un APK payant doit être livré par un checkout
+  // vérifié (Shopify Digital Products ou Stripe + lien privé), jamais ici.
+  if (app?.distribution !== "free") return false;
   const apk = app && app.apk;
   return apk && typeof apk.key === "string"
     && /^releases\/[a-z0-9][a-z0-9/_-]*\.apk$/.test(apk.key)
