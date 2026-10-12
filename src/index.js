@@ -2,7 +2,7 @@
 // - Sert le site statique (dossier public/) via le binding ASSETS
 // - Gère l'API d'inscription à l'infolettre : POST /api/inscription → base D1
 
-import { bienvenue, creerSessionCredits, creerSessionPaiement, creerSessionPerpetuelle, webhookStripe } from "./abonnements.js";
+import { bienvenue, creerSessionCredits, creerSessionPaiement, creerSessionPerpetuelle, abonnementsActifs, perpetualActif, webhookStripe } from "./abonnements.js";
 
 // Validation simple d'une adresse courriel
 const COURRIEL_VALIDE = /^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,24}$/;
@@ -142,6 +142,9 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    if (url.pathname === "/api/commerce/status" && request.method === "GET") {
+      return json({ abonnement: abonnementsActifs(env), permanente: perpetualActif(env) });
+    }
     if (url.pathname === "/api/inscription") {
       if (request.method !== "POST") {
         return json({ ok: false, erreur: "methode_non_permise" }, 405);
