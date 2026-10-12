@@ -91,9 +91,10 @@ function apkValide(app) {
   // vérifié (Shopify Digital Products ou Stripe + lien privé), jamais ici.
   if (app?.distribution !== "free") return false;
   const apk = app && app.apk;
-  return apk && typeof apk.key === "string"
-    && /^releases\/[a-z0-9][a-z0-9/_-]*\.apk$/.test(apk.key)
+  return apk && typeof app.slug === "string" && /^[a-z0-9-]{1,60}$/.test(app.slug)
     && typeof apk.version === "string" && /^[0-9][a-zA-Z0-9.+-]{0,39}$/.test(apk.version)
+    // Exact expected R2 path; dots in 1.0.0 are valid, ../ traversal is not.
+    && apk.key === `releases/${app.slug}/${app.slug}-${apk.version}.apk`
     && typeof apk.sha256 === "string" && /^[0-9a-f]{64}$/i.test(apk.sha256);
 }
 async function releases(request, env) {
