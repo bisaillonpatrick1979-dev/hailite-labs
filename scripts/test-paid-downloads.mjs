@@ -3,9 +3,9 @@ import worker from '../src/index.js';
 
 const hash = 'a'.repeat(64);
 const mkApp = distribution => ({
-  slug: 'hailite-manager',
+  slug: 'sample-app',
   distribution,
-  apk: { key:'releases/hailite-manager/hailite-manager-1.0.0.apk', version:'1.0.0', sha256:hash }
+  apk: { key:'releases/sample-app/sample-app-1.0.0.apk', version:'1.0.0', sha256:hash }
 });
 
 async function send(path,distribution) {
@@ -26,7 +26,7 @@ async function send(path,distribution) {
 }
 
 for(const status of ['paid','unpublished',undefined]) {
-  const d=await send('/api/download/hailite-manager',status);
+  const d=await send('/api/download/sample-app',status);
   assert.equal(d.response.status,404,'No public APK for '+status);
   assert.equal(d.r2GetCalls,0,'Do not even read paid APK bytes');
   const r=await send('/api/apps/releases',status);
@@ -34,7 +34,7 @@ for(const status of ['paid','unpublished',undefined]) {
   assert.deepEqual((await r.response.json()).releases,[]);
   assert.equal(r.r2HeadCalls,0,'Do not reveal private-paid release details');
 }
-const free=await send('/api/download/hailite-manager','free');
+const free=await send('/api/download/sample-app','free');
 assert.equal(free.response.status,200,'Explicit free app can be downloaded');
 assert.equal(free.r2GetCalls,1);
 const rel=await send('/api/apps/releases','free');

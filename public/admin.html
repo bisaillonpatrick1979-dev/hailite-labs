@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#06101d" />
+    <title>Administration | Hailite Labs</title>
+    <link rel="icon" href="/assets/logo.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/admin.css" />
+  </head>
+  <body
+    data-page-title-fr="Administration | Hailite Labs"
+    data-page-title-en="Administration | Hailite Labs"
+  >
+    <header class="site-header">
+      <a href="/" class="brand"
+        ><img src="/assets/logo.svg" class="brand-mark" alt="" /><span
+          class="brand-word"
+          >HAILITE <strong>LABS</strong></span
+        ></a
+      >
+      <div class="header-actions">
+        <a class="btn btn-ghost" href="/applications"
+          ><span data-fr>Voir le site</span><span data-en>View site</span></a
+        ><button type="button" class="lang-toggle" id="langToggle">
+          FR / EN
+        </button>
+      </div>
+    </header>
+    <main class="admin-main">
+      <div class="admin-intro">
+        <p class="kicker">HAILITE LABS / STUDIO</p>
+        <h1>
+          <span data-fr>Vos idées. Votre collection.</span
+          ><span data-en>Your ideas. Your collection.</span>
+        </h1>
+        <p>
+          <span data-fr
+            >Ajoutez vos applications et préparez leur prochaine version, à
+            votre rythme.</span
+          ><span data-en
+            >Add your apps and prepare their next release, at your own
+            pace.</span
+          >
+        </p>
+      </div>
+      <p
+        id="adminStatus"
+        class="admin-status"
+        role="status"
+        aria-live="polite"
+      ></p>
+      <section class="login-panel" id="loginPanel">
+        <p class="kicker">
+          <span data-fr>ESPACE PROPRIÉTAIRE</span
+          ><span data-en>OWNER ACCESS</span>
+        </p>
+        <h2><span data-fr>Se connecter</span><span data-en>Sign in</span></h2>
+        <form id="loginForm">
+          <label for="password"
+            ><span data-fr>Mot de passe</span
+            ><span data-en>Password</span></label
+          ><input
+            id="password"
+            name="password"
+            type="password"
+            required
+            autocomplete="current-password"
+            minlength="16"
+          /><button type="submit" class="btn btn-primary">
+            <span data-fr>Ouvrir mon studio</span
+            ><span data-en>Open my studio</span>
+          </button>
+        </form>
+        <p>
+          <span data-fr
+            >Votre session est privée. Vos brouillons restent invisibles sur le
+            site.</span
+          ><span data-en
+            >Your session is private. Drafts remain hidden from the public
+            site.</span
+          >
+        </p>
+      </section>
+      <section id="studio" hidden>
+        <div class="studio-toolbar">
+          <p id="storageNotice"></p>
+          <button class="btn btn-ghost" id="logout" type="button">
+            <span data-fr>Déconnexion</span><span data-en>Sign out</span>
+          </button>
+        </div>
+        <div class="studio-grid">
+          <aside class="app-sidebar">
+            <div class="sidebar-heading">
+              <h2>
+                <span data-fr>Applications</span
+                ><span data-en>Applications</span>
+              </h2>
+              <button class="btn btn-primary" id="newApp" type="button">
+                + <span data-fr>Ajouter</span><span data-en>Add</span>
+              </button>
+            </div>
+            <label for="adminSearch"
+              ><span data-fr>Rechercher</span><span data-en>Search</span></label
+            ><input type="search" id="adminSearch" />
+            <div id="appList" class="admin-app-list"></div>
+          </aside>
+          <div class="editor-panel">
+            <div id="editorEmpty">
+              <p class="kicker">
+                <span data-fr>VOTRE PROCHAIN LANCEMENT</span
+                ><span data-en>YOUR NEXT LAUNCH</span>
+              </p>
+              <h2>
+                <span data-fr>Une idée prend vie ici.</span
+                ><span data-en>An idea comes to life here.</span>
+              </h2>
+              <p>
+                <span data-fr
+                  >Choisissez une application ou touchez Ajouter pour
+                  commencer.</span
+                ><span data-en
+                  >Choose an application or tap Add to get started.</span
+                >
+              </p>
+            </div>
+            <form id="editorForm" hidden>
+              <div class="editor-heading">
+                <h2 id="editorHeading"></h2>
+                <span id="editorState" class="admin-badge"></span>
+              </div>
+              <fieldset id="editorFields">
+                <legend>
+                  <span data-fr>Présentation</span
+                  ><span data-en>Presentation</span>
+                </legend>
+                <div class="field-grid">
+                  <div>
+                    <label for="name"
+                      ><span data-fr>Nom de l’application</span
+                      ><span data-en>App name</span></label
+                    ><input
+                      id="name"
+                      name="name"
+                      type="text"
+                      required
+                      maxlength="100"
+                    />
+                  </div>
+                  <div>
+                    <label for="slug"
+                      ><span data-fr>Adresse courte (minuscules et tirets)</span
+                      ><span data-en
+                        >Short address (lowercase and hyphens)</span
+                      ></label
+                    ><input
+                      id="slug"
+                      name="slug"
+                      type="text"
+                      required
+                      pattern="[a-z0-9-]{1,60}"
+                      maxlength="60"
+                    />
+                  </div>
+                  <div>
+                    <label for="category"
+                      ><span data-fr>Catégorie</span
+                      ><span data-en>Category</span></label
+                    ><select id="category" name="category">
+                      <option value="games">Jeux / Games</option>
+                      <option value="business">Gestion / Business</option>
+                      <option value="lifestyle">
+                        Style de vie / Lifestyle
+                      </option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="stage"
+                      ><span data-fr>Disponibilité</span
+                      ><span data-en>Availability</span></label
+                    ><select name="stage" id="stage">
+                      <option value="development">
+                        En développement / In development
+                      </option>
+                      <option value="web">Essai Web / Web demo</option>
+                      <option value="concept">Concept</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="accent"
+                      ><span data-fr>Couleur d’accent</span
+                      ><span data-en>Accent colour</span></label
+                    ><input id="accent" name="accent" type="color" />
+                  </div>
+                  <div>
+                    <label for="distribution"
+                      ><span data-fr>Distribution</span
+                      ><span data-en>Distribution</span></label
+                    ><select id="distribution" name="distribution" required>
+                      <option value="">Choisir / Choose</option>
+                      <option value="free">Gratuite / Free</option>
+                      <option value="paid">Payante / Paid</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field-grid">
+                  <div>
+                    <label for="fr"
+                      ><span data-fr>Description française</span
+                      ><span data-en>French description</span></label
+                    ><textarea
+                      id="fr"
+                      name="fr"
+                      required
+                      maxlength="2000"
+                      rows="4"
+                    ></textarea
+                    ><label for="featuresFr"
+                      ><span data-fr
+                        >Fonctionnalités françaises — une par ligne</span
+                      ><span data-en
+                        >French features — one per line</span
+                      ></label
+                    ><textarea
+                      id="featuresFr"
+                      name="featuresFr"
+                      rows="3"
+                    ></textarea>
+                  </div>
+                  <div>
+                    <label for="en"
+                      ><span data-fr>Description anglaise</span
+                      ><span data-en>English description</span></label
+                    ><textarea
+                      id="en"
+                      name="en"
+                      required
+                      maxlength="2000"
+                      rows="4"
+                    ></textarea
+                    ><label for="featuresEn"
+                      ><span data-fr
+                        >Fonctionnalités anglaises — une par ligne</span
+                      ><span data-en
+                        >English features — one per line</span
+                      ></label
+                    ><textarea
+                      id="featuresEn"
+                      name="featuresEn"
+                      rows="3"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="field-grid">
+                  <div>
+                    <label for="webUrl"
+                      ><span data-fr>Lien de l’application Web</span
+                      ><span data-en>Web app link</span></label
+                    ><input
+                      id="webUrl"
+                      name="webUrl"
+                      type="text"
+                      maxlength="2048"
+                      placeholder="https://…"
+                    />
+                  </div>
+                  <div>
+                    <label for="purchaseUrl"
+                      ><span data-fr>Lien d’achat (application payante)</span
+                      ><span data-en>Purchase link (paid app)</span></label
+                    ><input
+                      id="purchaseUrl"
+                      name="purchaseUrl"
+                      type="text"
+                      maxlength="2048"
+                      placeholder="https://…"
+                    />
+                  </div>
+                </div>
+              </fieldset>
+              <section class="upload-panel">
+                <h3>
+                  <span data-fr>Visuels et fichier Android</span
+                  ><span data-en>Artwork and Android file</span>
+                </h3>
+                <p id="uploadHint">
+                  <span data-fr
+                    >Enregistrez la fiche une première fois pour ajouter ses
+                    fichiers.</span
+                  ><span data-en
+                    >Save the app once before adding its files.</span
+                  >
+                </p>
+                <div class="upload-grid">
+                  <label class="upload-box"
+                    ><span data-fr>Icône</span><span data-en>Icon</span
+                    ><small>PNG · JPEG · WebP / 5 Mio</small
+                    ><input
+                      id="iconFile"
+                      type="file"
+                      accept="image/png,image/jpeg,image/webp"
+                      disabled /></label
+                  ><label class="upload-box"
+                    ><span data-fr>Captures d’écran — maximum 6</span
+                    ><span data-en>Screenshots — up to 6</span
+                    ><small>PNG · JPEG · WebP / 5 Mio</small
+                    ><input
+                      id="screensFile"
+                      type="file"
+                      accept="image/png,image/jpeg,image/webp"
+                      multiple
+                      disabled
+                  /></label>
+                </div>
+                <div id="mediaList" class="media-list"></div>
+                <div class="apk-row">
+                  <div>
+                    <label for="apkVersion"
+                      ><span data-fr>Version du nouvel APK</span
+                      ><span data-en>New APK version</span></label
+                    ><input
+                      id="apkVersion"
+                      name="apkVersion"
+                      type="text"
+                      pattern="[0-9][a-zA-Z0-9.+-]{0,39}"
+                      maxlength="40"
+                      placeholder="1.0.0"
+                    />
+                  </div>
+                  <label class="upload-box"
+                    ><span data-fr>APK Android signé</span
+                    ><span data-en>Signed Android APK</span
+                    ><small>APK / 50 Mio</small
+                    ><input
+                      id="apkFile"
+                      type="file"
+                      accept=".apk,application/vnd.android.package-archive"
+                      disabled
+                  /></label>
+                </div>
+                <p id="apkInfo"></p>
+                <progress
+                  id="uploadProgress"
+                  value="0"
+                  max="100"
+                  hidden
+                  aria-label="Téléversement / Upload"
+                ></progress>
+                <p class="upload-footnote">
+                  <span data-fr
+                    >Les APK payants restent privés. Fournissez une version
+                    Android signée et testée.</span
+                  ><span data-en
+                    >Paid APKs stay private. Provide a signed and tested Android
+                    release.</span
+                  >
+                </p>
+              </section>
+              <div class="editor-actions">
+                <button
+                  type="button"
+                  class="btn btn-ghost"
+                  id="reloadApp"
+                  hidden
+                >
+                  <span data-fr>Recharger depuis le serveur</span
+                  ><span data-en>Reload from server</span></button
+                ><button type="submit" class="btn btn-primary" id="saveApp">
+                  <span data-fr>Enregistrer le brouillon</span
+                  ><span data-en>Save draft</span></button
+                ><button type="button" class="btn btn-ghost" id="previewApp">
+                  <span data-fr>Aperçu</span
+                  ><span data-en>Preview</span></button
+                ><button
+                  type="button"
+                  class="btn btn-primary"
+                  id="publishApp"
+                  disabled
+                >
+                  <span data-fr>Publier sur le site</span
+                  ><span data-en>Publish to site</span></button
+                ><button
+                  type="button"
+                  class="btn btn-ghost"
+                  id="unpublishApp"
+                  disabled
+                >
+                  <span data-fr>Dépublier</span><span data-en>Unpublish</span>
+                </button>
+              </div>
+              <p class="editor-help">
+                <span data-fr
+                  >Une modification reste dans le brouillon jusqu’à ce que vous
+                  touchiez Publier.</span
+                ><span data-en
+                  >Changes stay in your draft until you tap Publish.</span
+                >
+              </p>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+    <dialog
+      id="previewDialog"
+      class="admin-dialog"
+      aria-labelledby="previewTitle"
+    >
+      <button type="button" class="btn btn-ghost" id="closePreview">
+        <span data-fr>Fermer</span><span data-en>Close</span>
+      </button>
+      <div id="previewContent"></div>
+    </dialog>
+    <script src="/app.js" defer></script>
+    <script src="/admin.js" defer></script>
+  </body>
+</html>

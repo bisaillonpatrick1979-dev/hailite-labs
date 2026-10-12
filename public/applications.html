@@ -31,7 +31,7 @@
       <a href="/"><span data-fr>Accueil</span><span data-en>Home</span></a>
       <a href="#catalogue"><span data-fr>Applications</span><span data-en>Apps</span></a>
       <a href="#installation"><span data-fr>Installer un APK</span><span data-en>Install an APK</span></a>
-      <a href="/#contact">Contact</a>
+      <a href="/#contact">Contact</a><a href="/admin"><span data-fr>Administration</span><span data-en>Administration</span></a>
     </nav>
     <div class="header-actions">
       <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch to English">FR <span>/</span> EN</button>
@@ -54,10 +54,7 @@
         </div>
         <p class="apps-trust"><span>✓ Android</span><span>✓ FR / EN</span><span data-fr>✓ APK directement sur ce site (lorsqu'il sera prêt)</span><span data-en>✓ Direct APKs when ready</span></p>
       </div>
-      <div class="apps-hero-art" aria-hidden="true">
-        <span class="orbit orbit-one"></span><span class="orbit orbit-two"></span>
-        <div class="apps-phone"><div class="apps-phone-bar"></div><img src="/assets/logo.svg" alt=""><strong>HAILITE LABS</strong><small>APP COLLECTION</small><div class="apps-phone-icons"><span>◈</span><span>⬡</span><span>◇</span><span>✦</span></div></div>
-      </div>
+      <div class="collection-art" aria-hidden="true"><div><img src="/app-assets/liescope-icon.png" alt=""><img src="/app-assets/boardgame-icon.png" alt=""><img src="/app-assets/invoices-icon.png" alt=""><img src="/app-assets/fractura-icon.png" alt=""></div><span>HAILITE LABS / COLLECTION</span></div>
     </section>
     <section id="catalogue" class="section apps-section">
       <div class="section-heading">
@@ -100,12 +97,13 @@
   <footer>
     <div class="footer-brand"><a class="brand" href="/"><img src="/assets/logo.svg" alt="" class="brand-mark" width="34" height="34"><span class="brand-word">HAILITE <strong>LABS</strong></span></a><p data-fr>Des idées utiles. Une touche de futur.</p><p data-en>Useful ideas. A touch of future.</p></div>
     <div><b data-fr>Catalogue</b><b data-en>Catalog</b><a href="#catalogue"><span data-fr>Applications</span><span data-en>Apps</span></a><a href="#installation">Android APK</a></div>
-    <div><b>Hailite Labs</b><a href="/">Accueil / Home</a><a href="/#contact">Contact</a></div>
+    <div><b>Hailite Labs</b><a href="/">Accueil / Home</a><a href="/#contact">Contact</a><a href="/admin"><span data-fr>Administration</span><span data-en>Administration</span></a></div>
     <div><b>FR / EN</b><a href="/confidentialite"><span data-fr>Confidentialité</span><span data-en>Privacy</span></a><span>© <span id="annee">2026</span> Hailite Labs</span></div>
   </footer>
   <dialog id="appDialog" class="app-dialog" aria-labelledby="detailTitle"><div id="appDialogContent"></div><button class="dialog-close" id="closeDialog" type="button" aria-label="Fermer / Close">×</button></dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="/app.js" defer></script>
+  <script src="/catalogue-client.js" defer></script>
   <script src="/applications.js" defer></script>
 </body>
 </html>
