@@ -33,6 +33,55 @@ export function abonnementsActifs(env) {
   );
 }
 
+/** Paiement unique : désactivé tant que le tarif Stripe exact n'est pas configuré. */
+export function perpetualActif(env) {
+  return Boolean(creditsActifs(env) && /^price_[A-Za-z0-9]+$/.test(env.STRIPE_PRICE_PERPETUAL || ""));
+}
+
+/** Aucun nom, montant ni champ metadata reçu du client ne constitue une preuve d'achat. */
+export function validatePerpetualCheckout(session, items, configuredPrice) {
+  return Boolean(session && session.mode === "payment" && session.status === "complete"
+    && session.payment_status === "paid" && session.metadata?.type === "perpetual"
+    && typeof configuredPrice === "string" && configuredPrice.length > 0
+    && items && items.has_more === false && Array.isArray(items.data)
+    && items.data.length === 1 && items.data[0]?.price?.id === configuredPrice
+    && items.data[0]?.quantity === 1);
+}
+
+/** Checkout permanent : sans période d'essai, prix géré exclusivement sur Stripe. */
+export async function creerSessionPerpetuelle(request, env) {
+  if (!perpetualActif(env)) return json({ ok: false, erreur: "licences_inactives" }, 503);
+  let body = {};
+  try { body = await request.json(); } catch { /* invalidé en aval */ }
+  const langue = body.langue === "en" ? "en" : "fr";
+  const origine = new URL(request.url).origin;
+  const libelles = langue === "en"
+    ? { entreprise: "Company name", admin: "Your name (administrator)" }
+    : { entreprise: "Nom de l'entreprise", admin: "Votre nom (administrateur)" };
+  try {
+    const session = await stripe(env, "POST", "checkout/sessions", {
+      mode: "payment",
+      locale: langue === "en" ? "en" : "fr-CA",
+      line_items: { 0: { price: env.STRIPE_PRICE_PERPETUAL, quantity: 1 } },
+      metadata: { type: "perpetual" },
+      payment_intent_data: { metadata: { type: "perpetual" } },
+      billing_address_collection: "required",
+      custom_fields: {
+        0: { key: "entreprise", label: { type: "custom", custom: libelles.entreprise },
+          type: "text", text: { maximum_length: 100 } },
+        1: { key: "administrateur", label: { type: "custom", custom: libelles.admin },
+          type: "text", text: { maximum_length: 80 } }
+      },
+      success_url: `${origine}/bienvenue?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origine}/hailite-manager#forfaits`
+    });
+    return json({ ok: true, url: session.url });
+  } catch (err) {
+    console.error("Checkout permanent :", err.message);
+    return json({ ok: false, erreur: "stripe" }, 502);
+  }
+}
+
 function prixDuPalier(env, palier) {
   return { solo: env.STRIPE_PRICE_SOLO, equipe: env.STRIPE_PRICE_EQUIPE, entreprise: env.STRIPE_PRICE_ENTREPRISE }[palier] || null;
 }
@@ -255,14 +304,60 @@ async function provisionner(env, sessionId) {
   return await lireCommande(env, sessionId);
 }
 
+// Vérifie chez Stripe le produit et le paiement final, puis crée 1 seul tenant.
+// Les confirmations répétées et le webhook restent idempotents par session_id.
+async function provisionnerPerpetuel(env, sessionId) {
+  const ancienne = await lireCommande(env, sessionId);
+  if (ancienne?.code_entreprise && ancienne.nip_admin) return ancienne;
+  const session = await stripe(env, "GET", `checkout/sessions/${sessionId}`);
+  const items = await stripe(env, "GET", `checkout/sessions/${sessionId}/line_items`, { limit: 2 });
+  if (!validatePerpetualCheckout(session, items, env.STRIPE_PRICE_PERPETUAL)) {
+    return { erreur: "paiement_incomplet" };
+  }
+  const adresse = session.customer_details?.address || {};
+  const { statut, donnees } = await manager(env, "/api/billing/perpetual/provision", {
+    companyName: champ(session, "entreprise") || session.customer_details?.name || "Mon entreprise",
+    adminName: champ(session, "administrateur") || session.customer_details?.name || "Administrateur",
+    billingEmail: session.customer_details?.email || "",
+    provider: "stripe",
+    purchaseReference: session.id,
+    stripeCustomerId: typeof session.customer === "string" ? session.customer : session.customer?.id,
+    country: adresse.country === "US" ? "United States" : "Canada",
+    region: adresse.state || ""
+  });
+  if (statut !== 200 && statut !== 201) {
+    console.error("Provisionnement permanent :", statut);
+    return { erreur: "provisionnement" };
+  }
+  if (donnees.created && donnees.adminPin) {
+    await env.DB.prepare(
+      `INSERT INTO commandes (session_id, code_entreprise, nom_admin, nip_admin, palier, courriel)
+       VALUES (?, ?, ?, ?, ?, ?)
+       ON CONFLICT(session_id) DO UPDATE SET code_entreprise=excluded.code_entreprise,
+           nom_admin=excluded.nom_admin,nip_admin=excluded.nip_admin`
+    ).bind(sessionId, donnees.accessCode, donnees.adminName, donnees.adminPin,
+      "perpetual", session.customer_details?.email || "").run();
+  } else {
+    await env.DB.prepare(
+      "INSERT OR IGNORE INTO commandes (session_id, code_entreprise, nom_admin, palier, courriel) VALUES (?, ?, ?, ?, ?)"
+    ).bind(sessionId, donnees.accessCode, donnees.adminName,
+      "perpetual", session.customer_details?.email || "").run();
+  }
+  return lireCommande(env, sessionId);
+}
+
 export async function bienvenue(request, env) {
-  if (!abonnementsActifs(env)) return json({ ok: false, erreur: "abonnements_inactifs" }, 503);
+  if (!abonnementsActifs(env) && !perpetualActif(env)) return json({ ok: false, erreur: "paiements_inactifs" }, 503);
   const sessionId = new URL(request.url).searchParams.get("session_id") || "";
   if (!/^cs_(test|live)_[A-Za-z0-9]{10,200}$/.test(sessionId)) {
     return json({ ok: false, erreur: "session_invalide" }, 400);
   }
   try {
-    let commande = await provisionner(env, sessionId);
+    const session = await stripe(env, "GET", `checkout/sessions/${sessionId}`);
+    const permanente = session.mode === "payment" && session.metadata?.type === "perpetual";
+    if (permanente && !perpetualActif(env)) return json({ ok: false, erreur: "licences_inactives" }, 503);
+    if (!permanente && !abonnementsActifs(env)) return json({ ok: false, erreur: "abonnements_inactifs" }, 503);
+    let commande = permanente ? await provisionnerPerpetuel(env, sessionId) : await provisionner(env, sessionId);
     if (commande?.erreur) return json({ ok: false, erreur: commande.erreur }, commande.erreur === "paiement_incomplet" ? 409 : 502);
     // Course avec le webhook : l'autre appel détient peut-être le NIP. On relit un peu.
     for (let essai = 0; essai < 3 && commande && !commande.nip_admin && Date.now() - dateSql(commande.cree_le) < 60_000; essai += 1) {
@@ -337,6 +432,16 @@ export async function webhookStripe(request, env) {
         stripeRef: objet.id,
       });
       if (statut !== 200 && statut !== 201) return json({ ok: false }, 500);
+      return json({ ok: true });
+    }
+    if (["checkout.session.completed", "checkout.session.async_payment_succeeded"].includes(evenement.type)
+        && objet.mode === "payment" && objet.metadata?.type === "perpetual") {
+      if (evenement.type === "checkout.session.completed" && objet.payment_status !== "paid") {
+        return json({ ok: true }); // paiement asynchrone non encore finalisé
+      }
+      if (!perpetualActif(env)) return json({ ok: false }, 503);
+      const resultat = await provisionnerPerpetuel(env, objet.id);
+      if (resultat?.erreur || !resultat?.code_entreprise) return json({ ok: false }, 500);
       return json({ ok: true });
     }
     if (evenement.type === "checkout.session.completed" && objet.mode === "subscription") {
