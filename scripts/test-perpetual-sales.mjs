@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { validatePerpetualCheckout, perpetualActif } from '../src/abonnements.js';
+import { validatePerpetualCheckout, perpetualActif, isFullyRefundedCharge } from '../src/abonnements.js';
 
 const env = { STRIPE_PRICE_PERPETUAL: 'price_1234', STRIPE_SECRET_KEY:'sk_test_example',
               MANAGER_API_URL:'https://example.invalid', BILLING_API_SECRET:'secure_test' };
@@ -23,3 +23,7 @@ for(const bad of [
  [session,{data:[...items.data,{price:{id:'price_other'},quantity:1}]}],
 ])assert.equal(validatePerpetualCheckout(bad[0],bad[1],'price_1234'),false);
 console.log('Perpetual checkout must be paid, complete and match the configured Stripe price exactly.');
+
+assert.equal(isFullyRefundedCharge({refunded:true,amount:24900,amount_refunded:24900}),true);
+assert.equal(isFullyRefundedCharge({refunded:false,amount:24900,amount_refunded:200}),false);
+assert.equal(isFullyRefundedCharge({refunded:true,amount:24900,amount_refunded:0}),false);
