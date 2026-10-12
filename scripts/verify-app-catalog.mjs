@@ -25,7 +25,7 @@ for(const app of catalog.apps){
   }
   if(app.apk!==null){
     assert.ok(app.apk&&typeof app.apk==='object');
-    assert.match(app.apk.key,/^releases\/[a-z0-9][a-z0-9/_-]*\.apk$/);
+    assert.equal(app.apk.key,`releases/${app.slug}/${app.slug}-${app.apk.version}.apk`, 'R2 key must be strictly versioned');
     assert.match(app.apk.version,/^[0-9][a-zA-Z0-9.+-]{0,39}$/);
     assert.match(app.apk.sha256,/^[0-9a-f]{64}$/i);
   }
