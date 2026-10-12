@@ -1,3 +1,6 @@
+import { resolveApk, serveMedia } from "./app-files.js";
+import { handleAdmin } from "./admin.js";
+import { readCatalog } from "./catalogue.js";
 // Worker Hailite Labs
 // - Sert le site statique (dossier public/) via le binding ASSETS
 // - Gère l'API d'inscription à l'infolettre : POST /api/inscription → base D1
@@ -79,31 +82,16 @@ async function inscrire(request, env) {
 
 
 // Android APK / Cloudflare R2 — do not expose downloads unless object exists.
-async function lireCatalogue(env, request) {
-  const target = new URL("/app-data.json", request.url);
-  const result = await env.ASSETS.fetch(new Request(target));
-  if (!result.ok) throw new Error("catalogue_unavailable");
-  return (await result.json()).apps || [];
-}
-function apkValide(app) {
-  // Une route de téléchargement publique n'est utilisable QUE pour une app
-  // explicitement GRATUITE. Un APK payant doit être livré par un checkout
-  // vérifié (Shopify Digital Products ou Stripe + lien privé), jamais ici.
-  if (app?.distribution !== "free") return false;
-  const apk = app && app.apk;
-  return apk && typeof app.slug === "string" && /^[a-z0-9-]{1,60}$/.test(app.slug)
-    && typeof apk.version === "string" && /^[0-9][a-zA-Z0-9.+-]{0,39}$/.test(apk.version)
-    // Exact expected R2 path; dots in 1.0.0 are valid, ../ traversal is not.
-    && apk.key === `releases/${app.slug}/${app.slug}-${apk.version}.apk`
-    && typeof apk.sha256 === "string" && /^[0-9a-f]{64}$/i.test(apk.sha256);
-}
+const lireCatalogue = readCatalog;
 async function releases(request, env) {
   if (!env.APP_APKS) return json({ releases: [] });
   try {
     const apps = await lireCatalogue(env, request);
-    const available = await Promise.all(apps.filter(apkValide).map(async app => {
+    const available = await Promise.all(apps.map(async app => {
       try {
-        const object = await env.APP_APKS.head(app.apk.key);
+        const apk = await resolveApk(env, app);
+        if (!apk) return null;
+        const object = await env.APP_APKS.head(apk.key);
         if (!object) return null;
         return { slug: app.slug, available: true, version: app.apk.version,
           fileName: app.slug + "-" + app.apk.version + ".apk", sha256: app.apk.sha256, bytes: object.size };
@@ -121,8 +109,9 @@ async function telechargerApk(request, env, slug) {
   try {
     const apps = await lireCatalogue(env, request);
     const app = apps.find(item => item.slug === slug);
-    if (!apkValide(app)) return new Response("APK indisponible", { status: 404 });
-    const object = await env.APP_APKS.get(app.apk.key);
+    const apk = await resolveApk(env, app);
+    if (!apk) return new Response("APK indisponible", { status: 404, headers: {"cache-control":"no-store"} });
+    const object = await env.APP_APKS.get(apk.key);
     if (!object || !object.body) return new Response("APK indisponible", { status: 404 });
     const fileName = app.slug + "-" + app.apk.version + ".apk";
     const headers = new Headers({
@@ -141,6 +130,14 @@ async function telechargerApk(request, env, slug) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    if (url.pathname.startsWith("/api/app-media/") && request.method === "GET") return serveMedia(request,env,url.pathname.slice("/api/app-media/".length));
+
+    if (url.pathname.startsWith("/api/admin/")) return handleAdmin(request, env);
+
+    if (url.pathname === "/api/apps/catalog" && request.method === "GET") {
+      try { return json({ apps: await readCatalog(env, request) }); } catch { return json({ ok:false, erreur:"catalogue_indisponible" },503); }
+    }
 
     if (url.pathname === "/api/commerce/status" && request.method === "GET") {
       return json({ abonnement: abonnementsActifs(env), permanente: perpetualActif(env) });

@@ -63,3 +63,26 @@ wrangler.jsonc          ← configuration Cloudflare (le nom doit rester « hail
 - Après déploiement, `/api/apps/releases` n'affichera un APK que si la configuration, le manifeste et le fichier R2 correspondent. Tester le téléchargement depuis un vrai téléphone Samsung/Android avant toute annonce publique.
 - Ajouter uniquement de **vraies captures d'écran**. Quand il n'y en a pas, l'interface indique clairement qu'elles sont à venir.
 - Faire approuver les politiques applicables aux distributions hors boutique; ne pas tenter d'installation Android silencieuse.
+
+## Studio propriétaire et catalogue persistant
+
+La refonte ajoute `/admin` pour créer des fiches FR/EN, conserver des brouillons, téléverser icônes/captures/APK et publier explicitement. Les données sont stockées dans D1; les fichiers restent dans R2 privé. Les fichiers d’un brouillon et tous les APK payants sont exclus de l’accès public. L’accueil et `/applications` utilisent désormais `/api/apps/catalog`.
+
+L’activation de D1/R2 et des deux secrets propriétaire est détaillée dans [docs/cloudflare-admin-setup.md](docs/cloudflare-admin-setup.md). Le binding R2 n’est pas ajouté automatiquement : un bucket absent a déjà bloqué les déploiements de ce projet.
+
+Vérification serveur (Node.js 24, SQLite intégrée; aucun paquet npm à installer) :
+
+```bash
+node scripts/test-all.mjs
+```
+
+Les APK sont limités à 50 Mio et les images à 5 Mio. La galerie de fichiers est accessible sur appareil mobile, sans forcer la caméra. Les contrôles binaires et SHA-256 ne remplacent pas les tests/signatures d’un APK de production.
+
+Pour inclure les cinq scénarios d’interface DOM (les dépendances servent uniquement aux tests) :
+
+```bash
+npm ci --ignore-scripts
+npm test
+```
+
+Le workflow GitHub exécute également cette suite avec Node.js 24. Les scénarios DOM vérifient les interactions et les requêtes réelles du Worker; ils ne remplacent pas une vérification visuelle dans un navigateur ni un test Android.
