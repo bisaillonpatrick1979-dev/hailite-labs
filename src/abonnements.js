@@ -38,6 +38,11 @@ export function perpetualActif(env) {
   return Boolean(creditsActifs(env) && /^price_[A-Za-z0-9]+$/.test(env.STRIPE_PRICE_PERPETUAL || ""));
 }
 
+export function isFullyRefundedCharge(charge) {
+  return charge?.refunded === true && Number(charge.amount) > 0
+    && Number(charge.amount_refunded) >= Number(charge.amount);
+}
+
 /** Aucun nom, montant ni champ metadata reçu du client ne constitue une preuve d'achat. */
 export function validatePerpetualCheckout(session, items, configuredPrice) {
   return Boolean(session && session.mode === "payment" && session.status === "complete"
@@ -314,6 +319,13 @@ async function provisionnerPerpetuel(env, sessionId) {
   if (!validatePerpetualCheckout(session, items, env.STRIPE_PRICE_PERPETUAL)) {
     return { erreur: "paiement_incomplet" };
   }
+  // Le statut 'paid' de la session peut rester vrai après remboursement.
+  // Vérifier aussi la transaction réelle pour bloquer toute réactivation.
+  const intentId = typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id;
+  if (!/^pi_[A-Za-z0-9]{10,200}$/.test(intentId || "")) return { erreur: "paiement_incomplet" };
+  const intent = await stripe(env, "GET", `payment_intents/${intentId}`, { expand: { 0: "latest_charge" } });
+  if (isFullyRefundedCharge(intent.latest_charge)) return { erreur: "paiement_incomplet" };
+
   const adresse = session.customer_details?.address || {};
   const { statut, donnees } = await manager(env, "/api/billing/perpetual/provision", {
     companyName: champ(session, "entreprise") || session.customer_details?.name || "Mon entreprise",
@@ -414,6 +426,25 @@ export async function webhookStripe(request, env) {
   const objet = evenement.data?.object || {};
 
   try {
+    // Stripe : remboursement total d'un achat permanent. Vérification HMAC déjà
+    // faite; recherche de la session depuis le PaymentIntent connu de Stripe.
+    if (evenement.type === "charge.refunded"
+        && isFullyRefundedCharge(objet) && typeof objet.payment_intent === "string") {
+      const sessions = await stripe(env, "GET", "checkout/sessions", {
+        payment_intent: objet.payment_intent, limit: 2
+      });
+      const correspondantes = (sessions.data || []).filter(x =>
+        x.mode === "payment" && x.metadata?.type === "perpetual");
+      if (correspondantes.length === 1) {
+        const { statut } = await manager(env, "/api/billing/perpetual/revoke", {
+          provider: "stripe", purchaseReference: correspondantes[0].id, reason: "refunded"
+        });
+        // En cas de retard de provisionnement, la page de succès refusera
+        // aussi cet achat grâce au contrôle latest_charge ci-dessus.
+        if (![200, 404].includes(statut)) return json({ ok: false }, 500);
+      }
+      return json({ ok: true });
+    }
     // Recharge de crédits d'IA (paiement unique)
     if (evenement.type === "checkout.session.completed" && objet.mode === "payment" && objet.metadata?.type === "credits_ia") {
       if (objet.payment_status !== "paid") return json({ ok: true }); // paiement différé : rien à créditer encore
