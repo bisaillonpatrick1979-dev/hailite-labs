@@ -37,6 +37,28 @@
     });
   });
 
+  // Le prix définitif reste désactivé tant que le commerçant n'a pas
+  // configuré son produit Stripe et ses webhooks. Ne pas rediriger un
+  // acheteur vers un formulaire de paiement indisponible.
+  const btnPermanent = document.querySelector('.pm-buy[data-palier="perpetual"]');
+  if (btnPermanent) {
+    btnPermanent.disabled = true;
+    const indicateUnavailable = () => {
+      btnPermanent.disabled = true;
+      btnPermanent.querySelector('[data-fr]').textContent = 'Vente bientôt disponible';
+      btnPermanent.querySelector('[data-en]').textContent = 'Coming soon';
+      btnPermanent.title = texte('Activation commerciale en préparation', 'Checkout is being configured');
+    };
+    fetch('/api/commerce/status', {cache:'no-store'})
+      .then(async response => {
+        if (!response.ok) throw new Error('statut indisponible');
+        const statutCommerce = await response.json();
+        if (statutCommerce.permanente === true) {
+          btnPermanent.disabled = false;
+        } else indicateUnavailable();
+      }).catch(indicateUnavailable);
+  }
+
   // ---------- Page de bienvenue ----------
   const zone = document.getElementById("bienvenue");
   if (!zone) return;
