@@ -12,7 +12,7 @@
       boutons.forEach(b => { b.disabled = true; });
       if (statut) { statut.dataset.type = ""; statut.textContent = texte("Redirection vers le paiement sécurisé…", "Redirecting to secure checkout…"); }
       try {
-        const reponse = await fetch("/api/abonnement", {
+        const reponse = await fetch(bouton.dataset.palier === "perpetual" ? "/api/licence-permanente" : "/api/abonnement", {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({ palier: bouton.dataset.palier, langue: langue() }),
@@ -24,7 +24,7 @@
         }
         if (statut) {
           statut.dataset.type = "erreur";
-          statut.innerHTML = donnees.erreur === "abonnements_inactifs"
+          statut.innerHTML = ["abonnements_inactifs", "licences_inactives"].includes(donnees.erreur)
             ? texte("Les abonnements ouvrent bientôt. <a href=\"/#contact\">Inscrivez-vous</a> pour être prévenu du lancement.",
                     "Subscriptions open soon. <a href=\"/#contact\">Sign up</a> to hear about the launch.")
             : texte("Le paiement n'a pas pu démarrer. Réessayez ou écrivez à contact@hailitelabs.com.",
@@ -36,6 +36,28 @@
       boutons.forEach(b => { b.disabled = false; });
     });
   });
+
+  // Le prix définitif reste désactivé tant que le commerçant n'a pas
+  // configuré son produit Stripe et ses webhooks. Ne pas rediriger un
+  // acheteur vers un formulaire de paiement indisponible.
+  const btnPermanent = document.querySelector('.pm-buy[data-palier="perpetual"]');
+  if (btnPermanent) {
+    btnPermanent.disabled = true;
+    const indicateUnavailable = () => {
+      btnPermanent.disabled = true;
+      btnPermanent.querySelector('[data-fr]').textContent = 'Vente bientôt disponible';
+      btnPermanent.querySelector('[data-en]').textContent = 'Coming soon';
+      btnPermanent.title = texte('Activation commerciale en préparation', 'Checkout is being configured');
+    };
+    fetch('/api/commerce/status', {cache:'no-store'})
+      .then(async response => {
+        if (!response.ok) throw new Error('statut indisponible');
+        const statutCommerce = await response.json();
+        if (statutCommerce.permanente === true) {
+          btnPermanent.disabled = false;
+        } else indicateUnavailable();
+      }).catch(indicateUnavailable);
+  }
 
   // ---------- Page de bienvenue ----------
   const zone = document.getElementById("bienvenue");
