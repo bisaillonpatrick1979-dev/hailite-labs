@@ -6,6 +6,7 @@ on:
       - 'src/index.js'
       - 'scripts/verify-app-catalog.mjs'
       - 'scripts/test-paid-downloads.mjs'
+      - 'scripts/test-perpetual-sales.mjs'
       - '.github/workflows/app-catalogue.yml'
   push:
     branches: [main]
@@ -14,6 +15,7 @@ on:
       - 'src/index.js'
       - 'scripts/verify-app-catalog.mjs'
       - 'scripts/test-paid-downloads.mjs'
+      - 'scripts/test-perpetual-sales.mjs'
       - '.github/workflows/app-catalogue.yml'
 jobs:
   verify:
@@ -28,7 +30,10 @@ jobs:
           node --check public/app.js
           node --check public/applications.js
           node --check src/index.js
+          node --check src/abonnements.js
       - name: Validate catalogue and real image assets
         run: node scripts/verify-app-catalog.mjs
       - name: Verify paid APKs cannot be downloaded freely
         run: node scripts/test-paid-downloads.mjs
+      - name: Verify permanent licence checkout validation
+        run: node scripts/test-perpetual-sales.mjs
