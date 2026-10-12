@@ -14,6 +14,8 @@ for(const app of catalog.apps){
   assert.ok(app.name&&app.fr&&app.en);
   assert.ok(['games','business','lifestyle'].includes(app.category));
   assert.ok(['web','development','concept'].includes(app.stage));
+  assert.ok(['free','paid',undefined].includes(app.distribution),'Invalid sale classification');
+  if(app.slug==='hailite-manager')assert.equal(app.distribution,'paid','Hailite Manager download cannot be public');
   const local=[app.icon,...(app.screenshots||[])].filter(Boolean);
   for(const asset of local){
     assert.ok(asset.startsWith('/')&&!asset.startsWith('//'),'Invalid local URL: '+asset);
