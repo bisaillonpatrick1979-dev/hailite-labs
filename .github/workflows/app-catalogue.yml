@@ -28,6 +28,8 @@ jobs:
           node --check public/app.js
           node --check public/applications.js
           node --check src/index.js
+          node --check src/abonnements.js
+          node --check public/licence-merci.js
       - name: Validate catalogue and real image assets
         run: node scripts/verify-app-catalog.mjs
       - name: Verify paid APKs cannot be downloaded freely
