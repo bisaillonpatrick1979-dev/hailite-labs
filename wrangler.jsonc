@@ -25,11 +25,11 @@
     }
   ],
 
-  // R2 n'est PAS activé tant que le bucket 'hailite-labs-apks' n'est pas
-  // créé dans le même compte Cloudflare. Un binding vers un bucket absent
-  // fait échouer le déploiement du Worker; le catalogue répond sans APK.
-  // Ajouter r2_buckets UNIQUEMENT après création et validation du bucket.
-  // Les APK PAYANTS restent exclus des téléchargements publics dans src/index.js.
+  // Bucket privé créé et liaison APP_APKS confirmée dans Cloudflare.
+  // Garder ce binding dans Git pour le conserver lors des redéploiements.
+  "r2_buckets": [
+    { "binding": "APP_APKS", "bucket_name": "hailite-labs-apks" }
+  ],
 
   // Abonnements Hailite Manager (voir src/abonnements.js).
   // Les SECRETS (STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, BILLING_API_SECRET)
