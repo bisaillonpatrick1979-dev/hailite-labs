@@ -7,6 +7,7 @@ on:
       - 'scripts/verify-app-catalog.mjs'
       - 'scripts/test-paid-downloads.mjs'
       - 'scripts/test-perpetual-sales.mjs'
+      - 'scripts/test-perpetual-integration.mjs'
       - '.github/workflows/app-catalogue.yml'
   push:
     branches: [main]
@@ -16,6 +17,7 @@ on:
       - 'scripts/verify-app-catalog.mjs'
       - 'scripts/test-paid-downloads.mjs'
       - 'scripts/test-perpetual-sales.mjs'
+      - 'scripts/test-perpetual-integration.mjs'
       - '.github/workflows/app-catalogue.yml'
 jobs:
   verify:
@@ -37,3 +39,5 @@ jobs:
         run: node scripts/test-paid-downloads.mjs
       - name: Verify permanent licence checkout validation
         run: node scripts/test-perpetual-sales.mjs
+      - name: End-to-end Stripe purchase, activation and refund
+        run: node scripts/test-perpetual-integration.mjs
