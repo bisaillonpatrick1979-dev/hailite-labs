@@ -188,6 +188,69 @@ export async function creerSessionPaiement(request, env) {
   }
 }
 
+// ---------- Licence Android permanente (sans hébergement ni IA) ----------
+export function licencesActives(env) {
+  return Boolean(creditsActifs(env) && env.STRIPE_PRICE_LIFETIME);
+}
+export async function creerSessionLicence(request, env) {
+  if (!licencesActives(env)) return json({ ok: false, erreur: "licences_inactives" }, 503);
+  let data = {};
+  try { data = await request.json(); } catch {}
+  const langue = data.langue === "en" ? "en" : "fr";
+  try {
+    const origine = new URL(request.url).origin;
+    const session = await stripe(env, "POST", "checkout/sessions", {
+      mode: "payment",
+      locale: langue === "en" ? "en" : "fr-CA",
+      line_items: { 0: { price: env.STRIPE_PRICE_LIFETIME, quantity: 1 } },
+      billing_address_collection: "required",
+      customer_creation: "always",
+      metadata: { type: "hailite_manager_lifetime" },
+      success_url: `${origine}/licence-merci.html?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origine}/hailite-manager#forfaits`,
+    });
+    return json({ ok: true, url: session.url });
+  } catch (error) {
+    console.error("Lifetime checkout:", error.message);
+    return json({ ok: false, erreur: "stripe" }, 502);
+  }
+}
+async function confirmerLicence(env, sessionId) {
+  const session = await stripe(env, "GET", `checkout/sessions/${sessionId}`, {
+    expand: { 0: "line_items" }
+  });
+  const firstPrice = session.line_items?.data?.[0]?.price?.id;
+  // Never trust metadata or a client-supplied price to grant an entitlement.
+  if (session.mode !== "payment" || session.status !== "complete" ||
+      session.payment_status !== "paid" || session.metadata?.type !== "hailite_manager_lifetime" ||
+      firstPrice !== env.STRIPE_PRICE_LIFETIME || session.line_items?.data?.length !== 1 ||
+      session.line_items.data[0]?.quantity !== 1) {
+    return { erreur: "paiement_non_valide" };
+  }
+  const result = await manager(env, "/api/billing/lifetime/issue", {
+    purchaseRef: session.id,
+    email: session.customer_details?.email || ""
+  });
+  if (result.statut !== 200 || result.donnees?.ok !== true) {
+    return { erreur: "activation_indisponible" };
+  }
+  return { ok: true, licenseKey: result.donnees.licenseKey, cloudIncluded: false, aiIncluded: false };
+}
+export async function lireLicence(request, env) {
+  if (!licencesActives(env)) return json({ ok: false, erreur: "licences_inactives" }, 503);
+  const sessionId = new URL(request.url).searchParams.get("session_id") || "";
+  if (!/^cs_(test|live)_[A-Za-z0-9]{10,200}$/.test(sessionId)) {
+    return json({ ok: false, erreur: "session_invalide" }, 400);
+  }
+  try {
+    const result = await confirmerLicence(env, sessionId);
+    return result.erreur ? json({ ok: false, erreur: result.erreur }, result.erreur === "paiement_non_valide" ? 409 : 503) : json(result);
+  } catch (error) {
+    console.error("Licence verification:", error.message);
+    return json({ ok: false, erreur: "serveur" }, 503);
+  }
+}
+
 // ---------- 2. Page de bienvenue : création de l'entreprise ----------
 function champ(session, cle) {
   const trouve = (session.custom_fields || []).find(f => f.key === cle);
@@ -319,6 +382,14 @@ export async function webhookStripe(request, env) {
   const objet = evenement.data?.object || {};
 
   try {
+    // Paid lifetime Android: webhook ensures issue even if checkout tab closes.
+    if (["checkout.session.completed","checkout.session.async_payment_succeeded"].includes(evenement.type)
+        && objet.mode === "payment" && objet.metadata?.type === "hailite_manager_lifetime") {
+      if (evenement.type === "checkout.session.completed" && objet.payment_status !== "paid") return json({ ok: true });
+      const confirmation = await confirmerLicence(env, objet.id);
+      if (confirmation.erreur) return json({ ok: false }, 500);
+      return json({ ok: true });
+    }
     // Recharge de crédits d'IA (paiement unique)
     if (evenement.type === "checkout.session.completed" && objet.mode === "payment" && objet.metadata?.type === "credits_ia") {
       if (objet.payment_status !== "paid") return json({ ok: true }); // paiement différé : rien à créditer encore
