@@ -2,7 +2,7 @@
 // - Sert le site statique (dossier public/) via le binding ASSETS
 // - Gère l'API d'inscription à l'infolettre : POST /api/inscription → base D1
 
-import { bienvenue, creerSessionCredits, creerSessionPaiement, webhookStripe } from "./abonnements.js";
+import { bienvenue, creerSessionCredits, creerSessionPaiement, creerSessionLicence, lireLicence, webhookStripe } from "./abonnements.js";
 
 // Validation simple d'une adresse courriel
 const COURRIEL_VALIDE = /^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,24}$/;
@@ -161,6 +161,14 @@ export default {
         return json({ ok: false, erreur: "origine_refusee" }, 403);
       }
       return creerSessionPaiement(request, env);
+    }
+    if (url.pathname === "/api/licence/checkout" && request.method === "POST") {
+      const origine = request.headers.get("origin");
+      if (origine && new URL(origine).host !== url.host) return json({ ok: false, erreur: "origine_refusee" }, 403);
+      return creerSessionLicence(request, env);
+    }
+    if (url.pathname === "/api/licence/confirmation" && request.method === "GET") {
+      return lireLicence(request, env);
     }
     if (url.pathname === "/api/credits" && request.method === "POST") {
       const origine = request.headers.get("origin");
