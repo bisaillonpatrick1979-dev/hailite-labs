@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-10-10",
+  "updated": "2026-10-12",
   "apps": [
     {
       "slug": "hailite-manager",
@@ -26,7 +26,8 @@
         "/app-assets/hailite-manager-statistiques.png"
       ],
       "webUrl": "/hailite-manager",
-      "apk": null
+      "apk": null,
+      "distribution": "paid"
     },
     {
       "slug": "liescope",

@@ -14,6 +14,8 @@ for(const app of catalog.apps){
   assert.ok(app.name&&app.fr&&app.en);
   assert.ok(['games','business','lifestyle'].includes(app.category));
   assert.ok(['web','development','concept'].includes(app.stage));
+  assert.ok(['free','paid',undefined].includes(app.distribution),'Invalid sale classification');
+  if(app.slug==='hailite-manager')assert.equal(app.distribution,'paid','Hailite Manager download cannot be public');
   const local=[app.icon,...(app.screenshots||[])].filter(Boolean);
   for(const asset of local){
     assert.ok(asset.startsWith('/')&&!asset.startsWith('//'),'Invalid local URL: '+asset);
@@ -23,7 +25,7 @@ for(const app of catalog.apps){
   }
   if(app.apk!==null){
     assert.ok(app.apk&&typeof app.apk==='object');
-    assert.match(app.apk.key,/^releases\/[a-z0-9][a-z0-9/_-]*\.apk$/);
+    assert.equal(app.apk.key,`releases/${app.slug}/${app.slug}-${app.apk.version}.apk`, 'R2 key must be strictly versioned');
     assert.match(app.apk.version,/^[0-9][a-zA-Z0-9.+-]{0,39}$/);
     assert.match(app.apk.sha256,/^[0-9a-f]{64}$/i);
   }
